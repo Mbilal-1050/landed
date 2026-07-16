@@ -21,7 +21,7 @@ const plans = [
     name: "Pro",
     price: "$19",
     period: "/ month",
-    href: process.env.NEXT_PUBLIC_WHOP_PRO_LINK || "https://whop.com/checkout/your-pro-plan",
+    href: process.env.NEXT_PUBLIC_WHOP_PRO_LINK || "https://whop.com/checkout/plan_I8fEhVrzXnOTh",
     cta: "Get Pro",
     highlight: true,
     features: [
@@ -35,7 +35,7 @@ const plans = [
     name: "Business",
     price: "$49",
     period: "/ month",
-    href: process.env.NEXT_PUBLIC_WHOP_BUSINESS_LINK || "https://whop.com/checkout/your-business-plan",
+    href: process.env.NEXT_PUBLIC_WHOP_BUSINESS_LINK || "https://whop.com/checkout/plan_iQOhmvBoNNNI2",
     cta: "Get Business",
     highlight: false,
     features: [

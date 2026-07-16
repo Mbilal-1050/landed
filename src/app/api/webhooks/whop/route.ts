@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
   // Whop membership payloads include the buyer's email and a plan/product id.
   // Map that plan id to your own 'pro' / 'business' labels below.
   const PLAN_MAP: Record<string, string> = {
-    // "plan_XXXXXXXX": "pro",
-    // "plan_YYYYYYYY": "business",
+    plan_I8fEhVrzXnOTh: "pro",
+    plan_iQOhmvBoNNNI2: "business",
   };
 
   switch (event.action) {
