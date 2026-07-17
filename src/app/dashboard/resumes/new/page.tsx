@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import ResumeForm from "@/components/ResumeForm";
+import NewResumeTabs from "@/components/NewResumeTabs";
 
 export default function NewResumePage() {
   return (
@@ -8,8 +8,9 @@ export default function NewResumePage() {
       <Link href="/dashboard/resumes" className="mb-6 flex items-center gap-1.5 text-sm text-fog-dim hover:text-fog">
         <ArrowLeft size={15} /> Back to resumes
       </Link>
-      <h1 className="mb-8 font-display text-3xl text-fog">New resume</h1>
-      <ResumeForm />
+      <h1 className="mb-2 font-display text-3xl text-fog">New resume</h1>
+      <p className="mb-8 text-fog-dim">Let AI build it from a few details, or paste your own text and scan it.</p>
+      <NewResumeTabs />
     </main>
   );
 }

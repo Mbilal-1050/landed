@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
@@ -7,7 +10,12 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main className="grain px-6 py-20 sm:px-10">
-        <div className="mx-auto max-w-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-xl"
+        >
           <p className="font-mono text-xs uppercase tracking-widest text-amber">Contact</p>
           <h1 className="mt-3 font-display text-4xl text-fog sm:text-5xl">Get in touch</h1>
           <p className="mt-4 text-fog-dim">
@@ -16,7 +24,7 @@ export default function ContactPage() {
           <div className="mt-10">
             <ContactForm />
           </div>
-        </div>
+        </motion.div>
       </main>
       <Footer />
     </>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Plus, FileText } from "lucide-react";
 
@@ -35,7 +36,13 @@ export default async function ResumesPage() {
               className="flex items-center justify-between rounded-xl border border-line bg-surface/40 px-5 py-4 transition hover:border-amber/40"
             >
               <div className="flex items-center gap-3">
-                <FileText size={16} className="text-fog-dim" />
+                {r.logo_url ? (
+                  <div className="relative h-8 w-8 overflow-hidden rounded-md border border-line bg-surface">
+                    <Image src={r.logo_url} alt="" fill className="object-contain p-0.5" unoptimized />
+                  </div>
+                ) : (
+                  <FileText size={16} className="text-fog-dim" />
+                )}
                 <div>
                   <p className="text-fog">{r.title}</p>
                   <p className="text-xs text-fog-dim">{r.target_role || "No target role set"}</p>

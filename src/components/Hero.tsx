@@ -7,15 +7,32 @@ import ATSGauge from "./ATSGauge";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden px-6 pb-24 pt-20 sm:px-10 sm:pt-28">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-amber/10 blur-3xl"
+        animate={{ x: [0, 30, 0], y: [0, 20, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 top-40 h-80 w-80 rounded-full bg-teal/10 blur-3xl"
+        animate={{ x: [0, -20, 0], y: [0, -30, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
+        <div className="relative">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 font-mono text-xs text-fog-dim"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-teal" />
+            <motion.span
+              className="h-1.5 w-1.5 rounded-full bg-teal"
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
             built for the bots that read you first
           </motion.div>
 
@@ -69,30 +86,56 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative rounded-2xl border border-line bg-surface/40 p-8"
+          animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+          transition={{
+            opacity: { duration: 0.8, delay: 0.3 },
+            scale: { duration: 0.8, delay: 0.3 },
+            y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 },
+          }}
+          className="relative rounded-2xl border border-line bg-surface/40 p-8 shadow-[0_0_60px_-15px_rgba(232,163,61,0.15)]"
         >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
+            animate={{ opacity: 1, scale: 1, rotate: -6 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="absolute -left-6 -top-4 hidden items-center gap-1.5 rounded-full border border-line bg-ink px-3 py-1.5 font-mono text-[10px] text-teal shadow-lg sm:flex"
+          >
+            ✓ keywords matched
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: 6 }}
+            animate={{ opacity: 1, scale: 1, rotate: 4 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            className="absolute -right-4 top-1/3 hidden rounded-full border border-line bg-ink px-3 py-1.5 font-mono text-[10px] text-amber shadow-lg sm:block"
+          >
+            real-time scoring
+          </motion.div>
+
           <p className="mb-4 text-center font-mono text-xs uppercase tracking-widest text-fog-dim">
             Live scan against job posting
           </p>
           <ATSGauge />
           <div className="mt-6 space-y-2 font-mono text-xs text-fog-dim">
-            <div className="flex justify-between">
-              <span>Keywords matched</span>
-              <span className="text-teal">18 / 20</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Formatting</span>
-              <span className="text-teal">passes</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Missing skills flagged</span>
-              <span className="text-coral">2</span>
-            </div>
+            {[
+              { label: "Keywords matched", value: "18 / 20", color: "text-teal" },
+              { label: "Formatting", value: "passes", color: "text-teal" },
+              { label: "Missing skills flagged", value: "2", color: "text-coral" },
+            ].map((row, i) => (
+              <motion.div
+                key={row.label}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 1.6 + i * 0.15 }}
+                className="flex justify-between"
+              >
+                <span>{row.label}</span>
+                <span className={row.color}>{row.value}</span>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+

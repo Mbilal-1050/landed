@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Plus, FileText } from "lucide-react";
+import StatsGrid from "@/components/StatsGrid";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -46,20 +47,13 @@ export default async function DashboardPage() {
         </span>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-line bg-surface/40 p-5">
-          <p className="text-xs uppercase tracking-wide text-fog-dim">Resumes</p>
-          <p className="mt-2 font-display text-2xl text-fog">{resumes?.length ?? 0}</p>
-        </div>
-        <div className="rounded-xl border border-line bg-surface/40 p-5">
-          <p className="text-xs uppercase tracking-wide text-fog-dim">Avg. match score</p>
-          <p className="mt-2 font-display text-2xl text-teal">{avgScore || "—"}{avgScore ? "%" : ""}</p>
-        </div>
-        <div className="rounded-xl border border-line bg-surface/40 p-5">
-          <p className="text-xs uppercase tracking-wide text-fog-dim">Plan status</p>
-          <p className="mt-2 font-display text-2xl text-fog capitalize">{profile?.subscription_status ?? "inactive"}</p>
-        </div>
-      </div>
+      <StatsGrid
+        stats={[
+          { label: "Resumes", value: String(resumes?.length ?? 0) },
+          { label: "Avg. match score", value: avgScore ? `${avgScore}%` : "—", color: "text-teal" },
+          { label: "Plan status", value: profile?.subscription_status ?? "inactive" },
+        ]}
+      />
 
       {!isPaid && (
         <Link
