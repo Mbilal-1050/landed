@@ -13,6 +13,21 @@
   --color-line: rgba(233, 237, 244, 0.1);
 }
 
+[data-theme="light"] {
+  --color-ink: #faf8f4;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2ede3;
+  --color-fog: #16202e;
+  --color-fog-dim: #5b6472;
+  --color-amber: #c8791f;
+  --color-amber-soft: #e0a750;
+  --color-teal: #0f9c8a;
+  --color-coral: #d1482f;
+  --color-line: rgba(22, 32, 46, 0.1);
+}
+
+
+
 @theme inline {
   --color-ink: var(--color-ink);
   --color-surface: var(--color-surface);
@@ -31,6 +46,7 @@
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease;
 }
 
 body {

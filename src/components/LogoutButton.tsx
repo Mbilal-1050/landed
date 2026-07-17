@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { LogOut } from "lucide-react";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -14,8 +15,9 @@ export default function LogoutButton() {
         router.push("/");
         router.refresh();
       }}
-      className="rounded-lg border border-line px-4 py-2 text-sm text-fog-dim transition hover:border-coral/50 hover:text-coral cursor-pointer"
+      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-fog-dim transition hover:bg-coral/10 hover:text-coral cursor-pointer"
     >
+      <LogOut size={16} />
       Log out
     </button>
   );
