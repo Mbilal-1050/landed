@@ -65,12 +65,12 @@ export default async function DashboardPage() {
       )}
 
       <div className="mt-10 flex items-center justify-between">
-        <h2 className="font-display text-xl text-fog">Recent resumes</h2>
+        <h2 className="font-display text-xl text-fog">Recent documents</h2>
         <Link
           href="/dashboard/resumes/new"
           className="flex items-center gap-1.5 rounded-lg border border-line px-4 py-2 text-sm text-fog transition hover:border-amber/50"
         >
-          <Plus size={15} /> New resume
+          <Plus size={15} /> New
         </Link>
       </div>
 
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
             href="/dashboard/resumes/new"
             className="rounded-xl border border-dashed border-line px-5 py-10 text-center text-fog-dim transition hover:border-amber/40 hover:text-fog"
           >
-            No resumes yet — create your first one to get an ATS match score.
+            Nothing here yet — create a resume, cover letter, or summary to get started.
           </Link>
         )}
       </div>

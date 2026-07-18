@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import ResumeForm from "@/components/ResumeForm";
 import DeleteResumeButton from "@/components/DeleteResumeButton";
+import DocumentViewer from "@/components/DocumentViewer";
 
 export default async function EditResumePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -21,26 +22,40 @@ export default async function EditResumePage({ params }: { params: Promise<{ id:
 
   if (!resume) notFound();
 
-  const content = (resume.content ?? {}) as { resume_text?: string; job_description?: string };
+  const content = (resume.content ?? {}) as {
+    resume_text?: string;
+    job_description?: string;
+    cover_letter?: string;
+    summary?: string;
+    linkedin_about?: string;
+  };
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10 sm:px-10">
       <div className="mb-6 flex items-center justify-between">
         <Link href="/dashboard/resumes" className="flex items-center gap-1.5 text-sm text-fog-dim hover:text-fog">
-          <ArrowLeft size={15} /> Back to resumes
+          <ArrowLeft size={15} /> Back to documents
         </Link>
         <DeleteResumeButton id={resume.id} />
       </div>
       <h1 className="mb-8 font-display text-3xl text-fog">{resume.title}</h1>
-      <ResumeForm
-        resumeId={resume.id}
-        initial={{
-          title: resume.title,
-          target_role: resume.target_role ?? "",
-          resume_text: content.resume_text ?? "",
-          job_description: content.job_description ?? "",
-        }}
-      />
+
+      {resume.doc_type === "resume" || !resume.doc_type ? (
+        <ResumeForm
+          resumeId={resume.id}
+          initial={{
+            title: resume.title,
+            target_role: resume.target_role ?? "",
+            resume_text: content.resume_text ?? "",
+            job_description: content.job_description ?? "",
+          }}
+        />
+      ) : (
+        <DocumentViewer
+          docType={resume.doc_type as "cover_letter" | "summary"}
+          content={content}
+        />
+      )}
     </main>
   );
 }

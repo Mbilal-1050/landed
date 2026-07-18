@@ -14,16 +14,25 @@
 }
 
 [data-theme="light"] {
-  --color-ink: #faf8f4;
+  --color-ink: #f3efe6;
   --color-surface: #ffffff;
-  --color-surface-2: #f2ede3;
+  --color-surface-2: #eae3d4;
   --color-fog: #16202e;
   --color-fog-dim: #5b6472;
-  --color-amber: #c8791f;
-  --color-amber-soft: #e0a750;
-  --color-teal: #0f9c8a;
-  --color-coral: #d1482f;
-  --color-line: rgba(22, 32, 46, 0.1);
+  --color-amber: #b8690f;
+  --color-amber-soft: #d6913f;
+  --color-teal: #0a8577;
+  --color-coral: #c33d24;
+  --color-line: rgba(22, 32, 46, 0.13);
+}
+
+[data-theme="light"] .border-line {
+  box-shadow: 0 1px 3px rgba(22, 32, 46, 0.06);
+}
+
+[data-theme="light"] ::selection {
+  background: var(--color-amber);
+  color: #fff;
 }
 
 

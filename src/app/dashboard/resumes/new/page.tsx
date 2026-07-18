@@ -1,16 +1,51 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import NewResumeTabs from "@/components/NewResumeTabs";
+import { ArrowLeft, FileText, Mail, AlignLeft } from "lucide-react";
 
-export default function NewResumePage() {
+const tools = [
+  {
+    href: "/dashboard/resumes/new/resume",
+    icon: FileText,
+    title: "Resume",
+    body: "Full resume tailored and scored against a specific job description.",
+  },
+  {
+    href: "/dashboard/resumes/new/cover-letter",
+    icon: Mail,
+    title: "Cover letter",
+    body: "A complete, ready-to-send cover letter for a specific role.",
+  },
+  {
+    href: "/dashboard/resumes/new/summary",
+    icon: AlignLeft,
+    title: "Professional summary",
+    body: "A sharp 2-4 sentence summary for your resume header or LinkedIn.",
+  },
+];
+
+export default function NewDocumentHub() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10 sm:px-10">
+    <main className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
       <Link href="/dashboard/resumes" className="mb-6 flex items-center gap-1.5 text-sm text-fog-dim hover:text-fog">
         <ArrowLeft size={15} /> Back to resumes
       </Link>
-      <h1 className="mb-2 font-display text-3xl text-fog">New resume</h1>
-      <p className="mb-8 text-fog-dim">Let AI build it from a few details, or paste your own text and scan it.</p>
-      <NewResumeTabs />
+      <h1 className="mb-2 font-display text-3xl text-fog">What do you want to create?</h1>
+      <p className="mb-8 text-fog-dim">Tell us a bit about the role — AI writes the first draft.</p>
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        {tools.map((t) => (
+          <Link
+            key={t.href}
+            href={t.href}
+            className="group rounded-2xl border border-line bg-surface/40 p-6 transition hover:border-amber/50 hover:bg-surface-2"
+          >
+            <div className="grid h-11 w-11 place-items-center rounded-full bg-amber/10 text-amber transition group-hover:bg-amber group-hover:text-ink">
+              <t.icon size={18} />
+            </div>
+            <h2 className="mt-4 font-display text-lg text-fog">{t.title}</h2>
+            <p className="mt-1.5 text-sm text-fog-dim">{t.body}</p>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
