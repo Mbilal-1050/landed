@@ -23,6 +23,7 @@ const tools = [
 ];
 
 export default function NewDocumentHub() {
+  const aiAvailable = Boolean(process.env.ANTHROPIC_API_KEY);
   return (
     <main className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
       <Link href="/dashboard/resumes" className="mb-6 flex items-center gap-1.5 text-sm text-fog-dim hover:text-fog">
@@ -32,19 +33,27 @@ export default function NewDocumentHub() {
       <p className="mb-8 text-fog-dim">Tell us a bit about the role — AI writes the first draft.</p>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        {tools.map((t) => (
-          <Link
-            key={t.href}
-            href={t.href}
-            className="group rounded-2xl border border-line bg-surface/40 p-6 transition hover:border-amber/50 hover:bg-surface-2"
-          >
-            <div className="grid h-11 w-11 place-items-center rounded-full bg-amber/10 text-amber transition group-hover:bg-amber group-hover:text-ink">
-              <t.icon size={18} />
-            </div>
-            <h2 className="mt-4 font-display text-lg text-fog">{t.title}</h2>
-            <p className="mt-1.5 text-sm text-fog-dim">{t.body}</p>
-          </Link>
-        ))}
+        {tools.map((t) => {
+          const soon = !aiAvailable && t.href !== "/dashboard/resumes/new/resume";
+          return (
+            <Link
+              key={t.href}
+              href={t.href}
+              className="group relative rounded-2xl border border-line bg-surface/40 p-6 transition hover:border-amber/50 hover:bg-surface-2"
+            >
+              {soon && (
+                <span className="absolute right-4 top-4 rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-fog-dim">
+                  soon
+                </span>
+              )}
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-amber/10 text-amber transition group-hover:bg-amber group-hover:text-ink">
+                <t.icon size={18} />
+              </div>
+              <h2 className="mt-4 font-display text-lg text-fog">{t.title}</h2>
+              <p className="mt-1.5 text-sm text-fog-dim">{t.body}</p>
+            </Link>
+          );
+        })}
       </div>
     </main>
   );

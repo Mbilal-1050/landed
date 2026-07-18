@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Sparkles, FileEdit } from "lucide-react";
 import AiResumeWizard from "./AiResumeWizard";
 import ResumeForm from "./ResumeForm";
+import AiComingSoon from "./AiComingSoon";
 
-export default function NewResumeTabs() {
-  const [mode, setMode] = useState<"ai" | "manual">("ai");
+export default function NewResumeTabs({ aiAvailable = true }: { aiAvailable?: boolean }) {
+  const [mode, setMode] = useState<"ai" | "manual">(aiAvailable ? "ai" : "manual");
 
   return (
     <div>
@@ -18,6 +19,11 @@ export default function NewResumeTabs() {
           }`}
         >
           <Sparkles size={14} /> Build with AI
+          {!aiAvailable && (
+            <span className="ml-1 rounded-full bg-surface-2 px-1.5 py-0.5 text-[10px] text-fog-dim">
+              soon
+            </span>
+          )}
         </button>
         <button
           onClick={() => setMode("manual")}
@@ -29,7 +35,7 @@ export default function NewResumeTabs() {
         </button>
       </div>
 
-      {mode === "ai" ? <AiResumeWizard /> : <ResumeForm />}
+      {mode === "ai" ? aiAvailable ? <AiResumeWizard /> : <AiComingSoon tool="resume builder" /> : <ResumeForm />}
     </div>
   );
 }
