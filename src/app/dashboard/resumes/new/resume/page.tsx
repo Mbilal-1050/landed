@@ -23,7 +23,11 @@ export default async function NewResumePage() {
       </Link>
       <h1 className="mb-2 font-display text-3xl text-fog">New resume</h1>
       <p className="mb-8 text-fog-dim">Let AI build it from a few details, or paste your own text and scan it.</p>
-      <NewResumeTabs aiAvailable={aiAvailable} aiConfigured={aiConfigured} />
+      <NewResumeTabs
+        aiAvailable={aiAvailable}
+        aiConfigured={aiConfigured}
+        isTrialing={profile?.subscription_status === "trialing"}
+      />
     </main>
   );
 }

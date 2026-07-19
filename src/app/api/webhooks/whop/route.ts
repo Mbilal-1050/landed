@@ -65,19 +65,38 @@ export async function POST(req: NextRequest) {
   const supabase = createAdminClient();
 
   switch (event.type) {
-    case "membership.activated":
-    case "membership.deactivated": {
+    case "membership.activated": {
+      // Fires when a membership becomes valid — including the moment a free
+      // trial starts, before any money has moved. We mark this as
+      // "trialing" (not "active") so AI generation stays locked until a
+      // real payment confirms via payment.succeeded below. This keeps AI
+      // cost tied to confirmed revenue, not signups.
       const membership = event.data;
       const email: string | undefined = membership?.user?.email;
       const planId: string | undefined = membership?.plan?.id;
-      const status = event.type === "membership.activated" ? "active" : "canceled";
 
       if (email) {
         await supabase
           .from("profiles")
           .update({
-            subscription_status: status,
-            plan: status === "active" ? PLAN_MAP[planId ?? ""] ?? "pro" : "free",
+            subscription_status: "trialing",
+            plan: PLAN_MAP[planId ?? ""] ?? "pro",
+            whop_membership_id: membership?.id ?? null,
+          })
+          .eq("email", email);
+      }
+      break;
+    }
+    case "membership.deactivated": {
+      const membership = event.data;
+      const email: string | undefined = membership?.user?.email;
+
+      if (email) {
+        await supabase
+          .from("profiles")
+          .update({
+            subscription_status: "canceled",
+            plan: "free",
             whop_membership_id: membership?.id ?? null,
           })
           .eq("email", email);
@@ -85,8 +104,21 @@ export async function POST(req: NextRequest) {
       break;
     }
     case "payment.succeeded": {
-      // Optional: log/record successful renewal payments. Membership status
-      // is already kept in sync by membership.activated/deactivated above.
+      // The only event that confirms real money was actually charged.
+      // This is what unlocks AI generation — trial starts alone don't.
+      const payment = event.data;
+      const email: string | undefined = payment?.user?.email;
+      const planId: string | undefined = payment?.plan?.id;
+
+      if (email) {
+        await supabase
+          .from("profiles")
+          .update({
+            subscription_status: "active",
+            plan: PLAN_MAP[planId ?? ""] ?? "pro",
+          })
+          .eq("email", email);
+      }
       break;
     }
     default:

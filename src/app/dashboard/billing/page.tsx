@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2, Clock, ExternalLink } from "lucide-react";
 
 export default async function BillingPage() {
   const supabase = await createClient();
@@ -15,6 +15,7 @@ export default async function BillingPage() {
     .single();
 
   const isPaid = profile?.subscription_status === "active";
+  const isTrialing = profile?.subscription_status === "trialing";
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10 sm:px-10">
@@ -30,16 +31,27 @@ export default async function BillingPage() {
           </div>
           <span
             className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-              isPaid ? "bg-teal/10 text-teal" : "border border-line text-fog-dim"
+              isPaid
+                ? "bg-teal/10 text-teal"
+                : isTrialing
+                ? "bg-amber/10 text-amber"
+                : "border border-line text-fog-dim"
             }`}
           >
             {isPaid && <CheckCircle2 size={13} />}
+            {isTrialing && <Clock size={13} />}
             {profile?.subscription_status ?? "inactive"}
           </span>
         </div>
 
+        {isTrialing && (
+          <p className="mt-3 text-sm text-fog-dim">
+            Your trial is active. AI generation unlocks automatically once your first payment goes through.
+          </p>
+        )}
+
         <div className="mt-6 flex flex-wrap gap-3">
-          {!isPaid && (
+          {!isPaid && !isTrialing && (
             <Link
               href="/pricing"
               className="rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft"
@@ -47,7 +59,7 @@ export default async function BillingPage() {
               Upgrade plan
             </Link>
           )}
-          {isPaid && (
+          {(isPaid || isTrialing) && (
             <Link
               href="/pricing"
               className="rounded-lg border border-line px-5 py-2.5 text-sm text-fog transition hover:border-amber/50"

@@ -10,15 +10,17 @@ import AiUpgradeRequired from "./AiUpgradeRequired";
 export default function NewResumeTabs({
   aiAvailable = true,
   aiConfigured = true,
+  isTrialing = false,
 }: {
   aiAvailable?: boolean;
   aiConfigured?: boolean;
+  isTrialing?: boolean;
 }) {
   const [mode, setMode] = useState<"ai" | "manual">(aiAvailable ? "ai" : "manual");
 
   function renderAiPane() {
     if (!aiConfigured) return <AiComingSoon tool="resume builder" />;
-    if (!aiAvailable) return <AiUpgradeRequired tool="resume builder" />;
+    if (!aiAvailable) return <AiUpgradeRequired tool="resume builder" isTrialing={isTrialing} />;
     return <AiResumeWizard />;
   }
 

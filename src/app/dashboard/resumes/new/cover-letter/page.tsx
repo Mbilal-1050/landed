@@ -28,7 +28,7 @@ export default async function NewCoverLetterPage() {
       {aiAvailable ? (
         <CoverLetterWizard />
       ) : aiConfigured ? (
-        <AiUpgradeRequired tool="cover letter writer" />
+        <AiUpgradeRequired tool="cover letter writer" isTrialing={profile?.subscription_status === "trialing"} />
       ) : (
         <AiComingSoon tool="cover letter writer" />
       )}

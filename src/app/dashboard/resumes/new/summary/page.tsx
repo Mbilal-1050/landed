@@ -28,7 +28,7 @@ export default async function NewSummaryPage() {
       {aiAvailable ? (
         <SummaryWizard />
       ) : aiConfigured ? (
-        <AiUpgradeRequired tool="summary writer" />
+        <AiUpgradeRequired tool="summary writer" isTrialing={profile?.subscription_status === "trialing"} />
       ) : (
         <AiComingSoon tool="summary writer" />
       )}
