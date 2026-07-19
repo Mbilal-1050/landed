@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import LaunchBanner from "./LaunchBanner";
 
 const plans = [
   {
@@ -69,7 +70,11 @@ export default function Pricing() {
           Pick a plan. Cancel anytime.
         </motion.h2>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-3">
+        <div className="mt-10">
+          <LaunchBanner />
+        </div>
+
+        <div className="mt-4 grid gap-6 sm:grid-cols-3">
           {plans.map((p, i) => (
             <motion.div
               key={p.name}
