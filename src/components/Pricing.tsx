@@ -25,9 +25,9 @@ const plans = [
     cta: "Get Pro",
     highlight: true,
     features: [
-      "Unlimited tailored resumes",
+      "60 AI generations / month",
+      "Resumes, cover letters & summaries",
       "ATS match scoring",
-      "AI cover letters",
       "Version history",
     ],
   },
@@ -39,7 +39,7 @@ const plans = [
     cta: "Get Business",
     highlight: false,
     features: [
-      "Everything in Pro",
+      "200 AI generations / month",
       "5 team seats",
       "Shared resume library",
       "Priority support",

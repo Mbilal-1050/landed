@@ -2,8 +2,8 @@ import { SupabaseClient } from "@supabase/supabase-js";
 
 const RESET_INTERVAL_DAYS = 30;
 const LIMITS: Record<string, number> = {
-  pro: 30,
-  business: 100,
+  pro: 60,
+  business: 200,
 };
 
 export interface UsageCheckResult {
