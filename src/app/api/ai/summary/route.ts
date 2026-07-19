@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { checkAndConsumeAiUsage } from "@/lib/ai-usage";
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -15,6 +16,21 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+
+  const admin = createAdminClient();
+  const usage = await checkAndConsumeAiUsage(admin, user.id);
+  if (!usage.allowed) {
+    if (usage.reason === "not_subscribed") {
+      return NextResponse.json(
+        { error: "AI generation is available on paid plans. Upgrade to unlock it.", code: "UPGRADE_REQUIRED" },
+        { status: 403 }
+      );
+    }
+    return NextResponse.json(
+      { error: `You've used all ${usage.limit} AI generations for this billing period. It resets automatically.`, code: "LIMIT_REACHED" },
+      { status: 429 }
+    );
+  }
 
   const { targetRole, background, tone } = await req.json();
 

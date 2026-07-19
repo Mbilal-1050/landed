@@ -5,9 +5,22 @@ import { Sparkles, FileEdit } from "lucide-react";
 import AiResumeWizard from "./AiResumeWizard";
 import ResumeForm from "./ResumeForm";
 import AiComingSoon from "./AiComingSoon";
+import AiUpgradeRequired from "./AiUpgradeRequired";
 
-export default function NewResumeTabs({ aiAvailable = true }: { aiAvailable?: boolean }) {
+export default function NewResumeTabs({
+  aiAvailable = true,
+  aiConfigured = true,
+}: {
+  aiAvailable?: boolean;
+  aiConfigured?: boolean;
+}) {
   const [mode, setMode] = useState<"ai" | "manual">(aiAvailable ? "ai" : "manual");
+
+  function renderAiPane() {
+    if (!aiConfigured) return <AiComingSoon tool="resume builder" />;
+    if (!aiAvailable) return <AiUpgradeRequired tool="resume builder" />;
+    return <AiResumeWizard />;
+  }
 
   return (
     <div>
@@ -21,7 +34,7 @@ export default function NewResumeTabs({ aiAvailable = true }: { aiAvailable?: bo
           <Sparkles size={14} /> Build with AI
           {!aiAvailable && (
             <span className="ml-1 rounded-full bg-surface-2 px-1.5 py-0.5 text-[10px] text-fog-dim">
-              soon
+              {aiConfigured ? "pro" : "soon"}
             </span>
           )}
         </button>
@@ -35,7 +48,7 @@ export default function NewResumeTabs({ aiAvailable = true }: { aiAvailable?: bo
         </button>
       </div>
 
-      {mode === "ai" ? aiAvailable ? <AiResumeWizard /> : <AiComingSoon tool="resume builder" /> : <ResumeForm />}
+      {mode === "ai" ? renderAiPane() : <ResumeForm />}
     </div>
   );
 }
