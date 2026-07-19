@@ -121,6 +121,20 @@ export async function POST(req: NextRequest) {
       }
       break;
     }
+    case "refund.created": {
+      // Honors the 7-day money-back guarantee — revoke paid access the
+      // moment a refund is issued, whether done manually or automatically.
+      const refund = event.data;
+      const email: string | undefined = refund?.user?.email ?? refund?.payment?.user?.email;
+
+      if (email) {
+        await supabase
+          .from("profiles")
+          .update({ subscription_status: "canceled", plan: "free" })
+          .eq("email", email);
+      }
+      break;
+    }
     default:
       // Ignore events we don't act on
       break;

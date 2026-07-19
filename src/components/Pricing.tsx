@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 import LaunchBanner from "./LaunchBanner";
 
 const plans = [
@@ -69,6 +69,10 @@ export default function Pricing() {
         >
           Pick a plan. Cancel anytime.
         </motion.h2>
+        <p className="mt-3 flex items-center gap-1.5 text-sm text-fog-dim">
+          <ShieldCheck size={15} className="text-teal" />
+          7-day money-back guarantee — full refund, no questions asked.
+        </p>
 
         <div className="mt-10">
           <LaunchBanner />
@@ -120,7 +124,7 @@ export default function Pricing() {
           ))}
         </div>
         <p className="mt-6 text-center text-xs text-fog-dim">
-          Payments handled securely by Whop. Prices shown are placeholders — set your real plan prices in your Whop dashboard.
+          Payments handled securely by Whop. <span className="text-teal">7-day money-back guarantee</span> on every paid plan — no questions asked.
         </p>
       </div>
     </section>
