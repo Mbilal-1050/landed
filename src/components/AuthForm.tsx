@@ -10,6 +10,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [referralSource, setReferralSource] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -31,7 +32,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName, referred_by: refCode } },
+        options: { data: { full_name: fullName, referred_by: refCode, referral_source: referralSource || null } },
       });
       if (error) setError(error.message);
       else setNotice("Check your inbox to confirm your email, then log in.");
@@ -87,6 +88,26 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
             onChange={(e) => setFullName(e.target.value)}
             className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-sm outline-none placeholder:text-fog-dim focus:border-amber/60"
           />
+        )}
+        {mode === "signup" && (
+          <select
+            value={referralSource}
+            onChange={(e) => setReferralSource(e.target.value)}
+            className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-sm text-fog-dim outline-none focus:border-amber/60"
+          >
+            <option value="">How did you hear about us? (optional)</option>
+            <option value="Product Hunt">Product Hunt</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Facebook">Facebook</option>
+            <option value="X / Twitter">X / Twitter</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="YouTube">YouTube</option>
+            <option value="Reddit">Reddit</option>
+            <option value="Google Search">Google Search</option>
+            <option value="Friend / Colleague">Friend / Colleague</option>
+            <option value="Other">Other</option>
+          </select>
         )}
         <input
           type="email"

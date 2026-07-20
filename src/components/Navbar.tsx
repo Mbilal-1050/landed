@@ -31,6 +31,7 @@ export default function Navbar() {
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-fog-dim sm:flex">
           <Link href="/#how" className="transition hover:text-fog">How it works</Link>
+          <Link href="/#demo" className="transition hover:text-fog">Try it live</Link>
           <Link href="/#features" className="transition hover:text-fog">Features</Link>
           <Link href="/#pricing" className="transition hover:text-fog">Pricing</Link>
           <Link href="/faq" className="transition hover:text-fog">FAQ</Link>
