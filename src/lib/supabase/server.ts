@@ -1,6 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
 // Server-side Supabase client for Server Components, Route Handlers, and Server Actions.
 export async function createClient() {
   const cookieStore = await cookies();
@@ -9,6 +11,9 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: ROOT_DOMAIN
+        ? { domain: `.${ROOT_DOMAIN}`, path: "/", sameSite: "lax", secure: true }
+        : undefined,
       cookies: {
         getAll() {
           return cookieStore.getAll();
