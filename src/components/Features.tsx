@@ -32,16 +32,14 @@ export default function Features() {
       <div className="mx-auto max-w-6xl">
         <motion.p
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           className="font-mono text-xs uppercase tracking-widest text-amber"
         >
           What&apos;s on board
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="mt-3 max-w-lg font-display text-3xl text-fog sm:text-4xl"
         >
@@ -53,8 +51,7 @@ export default function Features() {
             <motion.div
               key={f.title}
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1 }}
               transition={{ delay: i * 0.08, duration: 0.5 }}
               className="bg-ink p-8"
             >

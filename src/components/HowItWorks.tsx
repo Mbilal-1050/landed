@@ -26,16 +26,14 @@ export default function HowItWorks() {
       <div className="mx-auto max-w-6xl">
         <motion.p
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           className="font-mono text-xs uppercase tracking-widest text-amber"
         >
           Boarding process
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="mt-3 max-w-lg font-display text-3xl text-fog sm:text-4xl"
         >
@@ -47,8 +45,7 @@ export default function HowItWorks() {
             <motion.div
               key={s.n}
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.12, duration: 0.6 }}
               className="relative rounded-2xl border border-line bg-surface/30 p-6"
             >

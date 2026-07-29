@@ -34,8 +34,7 @@ export default function LiveDemo() {
         </div>
         <motion.h2
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           className="mt-3 max-w-lg font-display text-3xl text-fog sm:text-4xl"
         >
           See your match score right now.

@@ -54,16 +54,14 @@ export default function Pricing() {
       <div className="mx-auto max-w-6xl">
         <motion.p
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
           className="font-mono text-xs uppercase tracking-widest text-amber"
         >
           Fares
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="mt-3 max-w-lg font-display text-3xl text-fog sm:text-4xl"
         >
@@ -83,8 +81,7 @@ export default function Pricing() {
             <motion.div
               key={p.name}
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
               className={`relative rounded-2xl border p-8 ${
                 p.highlight
