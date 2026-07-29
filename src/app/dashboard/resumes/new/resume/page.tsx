@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import NewResumeTabs from "@/components/NewResumeTabs";
 
 export default async function NewResumePage() {
-  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY);
+  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY);
   const supabase = await createClient();
   const {
     data: { user },

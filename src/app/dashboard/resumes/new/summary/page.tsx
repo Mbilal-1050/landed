@@ -6,7 +6,7 @@ import AiComingSoon from "@/components/AiComingSoon";
 import AiUpgradeRequired from "@/components/AiUpgradeRequired";
 
 export default async function NewSummaryPage() {
-  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY);
+  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY);
   const supabase = await createClient();
   const {
     data: { user },

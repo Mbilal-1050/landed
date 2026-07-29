@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { checkAndConsumeAiUsage } from "@/lib/ai-usage";
+import { generateJSON, aiConfigured } from "@/lib/ai-client";
 
 export async function POST(req: NextRequest) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!aiConfigured()) {
     return NextResponse.json(
-      { error: "AI generation isn't configured yet. Add an ANTHROPIC_API_KEY to enable it." },
+      { error: "AI generation isn't configured yet. Add an ANTHROPIC_API_KEY or GROQ_API_KEY to enable it." },
       { status: 503 }
     );
   }
@@ -41,8 +41,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
   const prompt = `You are an expert resume writer. Write a professional summary (for the top of a resume or a LinkedIn "About" section) using ONLY the facts given below — never invent experience.
 
 Target role: ${targetRole}
@@ -53,14 +51,8 @@ Respond with ONLY a JSON object (no markdown fences, no preamble):
 { "summary": "a 2-4 sentence professional summary", "linkedin_about": "a slightly longer, first-person version suitable for a LinkedIn About section" }`;
 
   try {
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-5",
-      max_tokens: 512,
-      messages: [{ role: "user", content: prompt }],
-    });
-    const textBlock = response.content.find((b) => b.type === "text");
-    if (!textBlock || textBlock.type !== "text") throw new Error("No text response");
-    const cleaned = textBlock.text.replace(/^```json\s*|\s*```$/g, "").trim();
+    const text = await generateJSON(prompt, 512);
+    const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
     return NextResponse.json(JSON.parse(cleaned));
   } catch (err) {
     console.error("Summary generation error:", err);

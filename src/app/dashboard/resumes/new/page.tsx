@@ -24,7 +24,7 @@ const tools = [
 ];
 
 export default async function NewDocumentHub() {
-  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY);
+  const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY);
   const supabase = await createClient();
   const {
     data: { user },

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { checkAndConsumeAiUsage } from "@/lib/ai-usage";
+import { generateJSON, aiConfigured } from "@/lib/ai-client";
 
 export async function POST(req: NextRequest) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!aiConfigured()) {
     return NextResponse.json(
-      { error: "AI generation isn't configured yet. Add an ANTHROPIC_API_KEY to enable it." },
+      { error: "AI generation isn't configured yet. Add an ANTHROPIC_API_KEY or GROQ_API_KEY to enable it." },
       { status: 503 }
     );
   }
@@ -56,8 +56,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
   const prompt = `You are an expert resume writer and career coach. Using ONLY the factual details the candidate gives you below, produce a tailored resume and cover letter for the specific job description provided. Do not invent employers, titles, dates, or achievements that were not mentioned — you may rephrase and emphasize what was given, but never fabricate facts.
 
 CANDIDATE DETAILS
@@ -82,20 +80,9 @@ Respond with ONLY a JSON object (no markdown fences, no preamble) with this exac
 }`;
 
   try {
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-5",
-      max_tokens: 2048,
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    const textBlock = response.content.find((b) => b.type === "text");
-    if (!textBlock || textBlock.type !== "text") {
-      throw new Error("No text response from AI");
-    }
-
-    const cleaned = textBlock.text.replace(/^```json\s*|\s*```$/g, "").trim();
+    const text = await generateJSON(prompt, 2048);
+    const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
     const parsed = JSON.parse(cleaned);
-
     return NextResponse.json(parsed);
   } catch (err) {
     console.error("AI generation error:", err);

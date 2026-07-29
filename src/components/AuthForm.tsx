@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
-  const router = useRouter();
   const supabase = createClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +40,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
         password,
       });
       if (error) setError(error.message);
-      else router.push("/dashboard");
+      else window.location.href = "/dashboard";
     }
     setLoading(false);
   }
