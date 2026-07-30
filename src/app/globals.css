@@ -98,3 +98,23 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
+  }
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm;
+    min-height: 297mm;
+  }
+}
