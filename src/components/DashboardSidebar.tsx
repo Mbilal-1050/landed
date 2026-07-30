@@ -39,23 +39,31 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </Link>
 
       <nav className="flex flex-1 flex-col gap-1">
-        {links.map((l) => {
-          const active =
-            l.href === "/dashboard" ? pathname === "/dashboard" : pathname?.startsWith(l.href);
-          return (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={onNavigate}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${
-                active ? "bg-amber/15 text-amber" : "text-fog-dim hover:bg-surface-2 hover:text-fog"
-              }`}
-            >
-              <l.icon size={16} />
-              {l.label}
-            </Link>
+        {(() => {
+          const matching = links.filter(
+            (l) => pathname === l.href || pathname?.startsWith(l.href + "/")
           );
-        })}
+          const mostSpecific = matching.reduce(
+            (a, b) => (b.href.length > a.href.length ? b : a),
+            links[0]
+          );
+          return links.map((l) => {
+            const active = l.href === mostSpecific.href && matching.length > 0;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={onNavigate}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${
+                  active ? "bg-amber/15 text-amber" : "text-fog-dim hover:bg-surface-2 hover:text-fog"
+                }`}
+              >
+                <l.icon size={16} />
+                {l.label}
+              </Link>
+            );
+          });
+        })()}
       </nav>
 
       <button
