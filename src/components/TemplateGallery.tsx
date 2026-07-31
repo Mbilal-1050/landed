@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Search, Check } from "lucide-react";
 import { TEMPLATE_VARIANTS, CATEGORIES, getTheme } from "@/lib/resume-templates/registry";
 import { themeStyle } from "@/lib/resume-templates/themes";
-import { SAMPLE_RESUME_DATA } from "@/lib/resume-templates/types";
+import { SAMPLE_PROFILES } from "@/lib/resume-templates/types";
 
 export default function TemplateGallery({
   onSelect,
@@ -84,7 +84,7 @@ export default function TemplateGallery({
                   className="absolute left-0 top-0 origin-top-left"
                   style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.196)" }}
                 >
-                  <Comp data={SAMPLE_RESUME_DATA} />
+                  <Comp data={SAMPLE_PROFILES[v.category]} />
                 </div>
                 {isSelected && (
                   <div className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-amber text-ink">

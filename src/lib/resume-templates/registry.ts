@@ -18,14 +18,14 @@ export interface LayoutDef {
 }
 
 export const LAYOUTS: LayoutDef[] = [
-  { id: "modern-minimal", name: "Modern Minimal", category: "Modern & Minimal", component: ModernMinimal },
-  { id: "ats-professional", name: "ATS Professional", category: "ATS Professional", component: AtsProfessional },
-  { id: "two-column-sidebar", name: "Two-Column Sidebar", category: "Two-Column", component: TwoColumnSidebar },
-  { id: "creative-colorful", name: "Creative Colorful", category: "Creative", component: CreativeColorful },
-  { id: "executive-classic", name: "Executive Classic", category: "Executive", component: ExecutiveClassic },
-  { id: "academic", name: "Academic", category: "Academic", component: Academic },
-  { id: "tech-developer", name: "Tech Developer", category: "Tech & Developer", component: TechDeveloper },
-  { id: "entry-level", name: "Entry Level", category: "Entry-Level", component: EntryLevel },
+  { id: "modern-minimal", name: "Aspen", category: "Modern & Minimal", component: ModernMinimal },
+  { id: "ats-professional", name: "Beacon", category: "ATS Professional", component: AtsProfessional },
+  { id: "two-column-sidebar", name: "Meridian", category: "Two-Column", component: TwoColumnSidebar },
+  { id: "creative-colorful", name: "Prism", category: "Creative", component: CreativeColorful },
+  { id: "executive-classic", name: "Sterling", category: "Executive", component: ExecutiveClassic },
+  { id: "academic", name: "Scholar", category: "Academic", component: Academic },
+  { id: "tech-developer", name: "Terminal", category: "Tech & Developer", component: TechDeveloper },
+  { id: "entry-level", name: "Horizon", category: "Entry-Level", component: EntryLevel },
 ];
 
 export const CATEGORIES: TemplateCategory[] = [
