@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import SocialShareButtons from "@/components/SocialShareButtons";
-import { Gift, Users } from "lucide-react";
+import { Gift, Users, DollarSign, ExternalLink } from "lucide-react";
 
 export default async function ReferralsPage() {
   const supabase = await createClient();
@@ -24,7 +24,7 @@ export default async function ReferralsPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10 sm:px-10">
-      <h1 className="mb-2 font-display text-3xl text-fog">Referrals</h1>
+      <h1 className="mb-2 font-display text-3xl text-fog">Refer & Earn</h1>
       <p className="mb-8 text-fog-dim">
         Share your link. Everyone who signs up through it is counted here.
       </p>
@@ -59,6 +59,25 @@ export default async function ReferralsPage() {
           <p className="font-display text-2xl text-fog">{count ?? 0}</p>
           <p className="text-sm text-fog-dim">people signed up with your link</p>
         </div>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-amber/30 bg-amber/5 p-6">
+        <div className="mb-2 flex items-center gap-2 text-amber">
+          <DollarSign size={16} />
+          <p className="text-sm font-medium">Want to earn real money?</p>
+        </div>
+        <p className="text-sm text-fog-dim">
+          Join our paid affiliate program on Whop and earn <strong className="text-fog">30% recurring commission</strong> for
+          every paying customer you bring — paid out automatically by Whop, for as long as they stay subscribed.
+        </p>
+        <a
+          href="https://whop.com/landed"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft"
+        >
+          Become an affiliate on Whop <ExternalLink size={13} />
+        </a>
       </div>
     </main>
   );

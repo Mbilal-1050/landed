@@ -27,7 +27,7 @@ const links = [
   { href: "/dashboard/resumes/templates", label: "Templates", icon: LayoutTemplate },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
-  { href: "/dashboard/referrals", label: "Referrals", icon: Gift },
+  { href: "/dashboard/referrals", label: "Refer & Earn", icon: Gift },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
