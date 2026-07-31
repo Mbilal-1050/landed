@@ -11,12 +11,16 @@ import { SAMPLE_PROFILES } from "@/lib/resume-templates/types";
 export default function TemplateGallery({
   onSelect,
   selectedKey,
+  publicMode = false,
+  initialCategory = "All",
 }: {
   onSelect?: (layoutId: string, themeId: string) => void;
   selectedKey?: string;
+  publicMode?: boolean;
+  initialCategory?: string;
 }) {
   const router = useRouter();
-  const [category, setCategory] = useState<string>("All");
+  const [category, setCategory] = useState<string>(initialCategory);
   const [query, setQuery] = useState("");
 
   const filtered = TEMPLATE_VARIANTS.filter((v) => {
@@ -31,6 +35,8 @@ export default function TemplateGallery({
   function handlePick(layoutId: string, themeId: string) {
     if (onSelect) {
       onSelect(layoutId, themeId);
+    } else if (publicMode) {
+      router.push(`/signup?template=${layoutId}&theme=${themeId}`);
     } else {
       router.push(`/dashboard/resumes/new/resume?template=${layoutId}&theme=${themeId}`);
     }

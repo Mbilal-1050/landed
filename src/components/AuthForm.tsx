@@ -16,10 +16,32 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [refCode, setRefCode] = useState<string | null>(null);
 
   useEffect(() => {
-    const ref = new URLSearchParams(window.location.search).get("ref");
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading a one-time value from the URL on mount, not a render loop
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading one-time values from the URL on mount, not a render loop
     if (ref) setRefCode(ref);
+
+    const template = params.get("template");
+    const theme = params.get("theme");
+    if (template) {
+      window.localStorage.setItem(
+        "landed-pending-template",
+        JSON.stringify({ template, theme: theme || "amber" })
+      );
+    }
   }, []);
+
+  function getPendingTemplateNext(): string {
+    try {
+      const raw = window.localStorage.getItem("landed-pending-template");
+      if (!raw) return "/dashboard";
+      const { template, theme } = JSON.parse(raw);
+      window.localStorage.removeItem("landed-pending-template");
+      return `/dashboard/resumes/new/resume?template=${template}&theme=${theme}`;
+    } catch {
+      return "/dashboard";
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,17 +63,18 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
         password,
       });
       if (error) setError(error.message);
-      else window.location.href = "/dashboard";
+      else window.location.href = getPendingTemplateNext();
     }
     setLoading(false);
   }
 
   async function handleGoogle() {
     setError(null);
+    const next = getPendingTemplateNext();
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/callback?next=/dashboard`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
   }

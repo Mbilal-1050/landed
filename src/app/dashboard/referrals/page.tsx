@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import CopyLinkButton from "@/components/CopyLinkButton";
+import SocialShareButtons from "@/components/SocialShareButtons";
 import { Gift, Users } from "lucide-react";
 
 export default async function ReferralsPage() {
@@ -18,7 +19,7 @@ export default async function ReferralsPage() {
     code: profile?.referral_code ?? "",
   });
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://landed-eta.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.landedofficial.online";
   const referralLink = `${siteUrl}/signup?ref=${profile?.referral_code ?? ""}`;
 
   return (
@@ -40,6 +41,13 @@ export default async function ReferralsPage() {
             className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 font-mono text-xs text-fog-dim outline-none"
           />
           <CopyLinkButton text={referralLink} />
+        </div>
+        <div className="mt-4">
+          <p className="mb-2 text-xs text-fog-dim">Or share directly</p>
+          <SocialShareButtons
+            url={referralLink}
+            text="I'm building my resume with Landed — it scores your resume against any job description before you apply."
+          />
         </div>
       </div>
 

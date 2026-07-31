@@ -1,11 +1,19 @@
 import Link from "next/link";
+import { XIcon, LinkedInIcon, InstagramIcon } from "./BrandIcons";
 import NewsletterForm from "./NewsletterForm";
+import { CATEGORIES } from "@/lib/resume-templates/registry";
+
+const SOCIALS = [
+  { icon: XIcon, href: "https://x.com/landedofficial", label: "X (Twitter)" },
+  { icon: LinkedInIcon, href: "https://linkedin.com/company/landedofficial", label: "LinkedIn" },
+  { icon: InstagramIcon, href: "https://instagram.com/landedofficial", label: "Instagram" },
+];
 
 export default function Footer() {
   return (
     <footer className="border-t border-line px-6 py-16 sm:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 sm:grid-cols-[1.3fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="font-display text-xl text-fog">
               Landed<span className="text-amber">.</span>
@@ -13,6 +21,20 @@ export default function Footer() {
             <p className="mt-3 max-w-xs text-sm text-fog-dim">
               Resumes tailored to the exact job you&apos;re applying to, scored before you send them.
             </p>
+            <div className="mt-5 flex gap-2">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="grid h-8 w-8 place-items-center rounded-full border border-line text-fog-dim transition hover:border-amber/50 hover:text-amber"
+                >
+                  <s.icon size={14} />
+                </a>
+              ))}
+            </div>
             <div className="mt-5">
               <p className="mb-2 text-xs text-fog-dim">Get product updates</p>
               <NewsletterForm />
@@ -26,6 +48,20 @@ export default function Footer() {
               <li><Link href="/#features" className="hover:text-fog">Features</Link></li>
               <li><Link href="/pricing" className="hover:text-fog">Pricing</Link></li>
               <li><Link href="/faq" className="hover:text-fog">FAQ</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="mb-3 text-xs font-medium uppercase tracking-wide text-fog">Templates</p>
+            <ul className="space-y-2 text-sm text-fog-dim">
+              <li><Link href="/templates" className="hover:text-fog">All templates</Link></li>
+              {CATEGORIES.slice(0, 5).map((c) => (
+                <li key={c}>
+                  <Link href={`/templates?category=${encodeURIComponent(c)}`} className="hover:text-fog">
+                    {c}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
