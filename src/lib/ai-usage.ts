@@ -1,10 +1,11 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
 const RESET_INTERVAL_DAYS = 30;
-const LIMITS: Record<string, number> = {
+export const AI_GENERATION_LIMITS: Record<string, number> = {
   pro: 60,
   business: 200,
 };
+const LIMITS = AI_GENERATION_LIMITS;
 
 export interface UsageCheckResult {
   allowed: boolean;

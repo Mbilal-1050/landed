@@ -123,6 +123,9 @@ export default function Pricing() {
         <p className="mt-6 text-center text-xs text-fog-dim">
           Payments handled securely by Whop. <span className="text-teal">7-day money-back guarantee</span> on every paid plan — no questions asked.
         </p>
+        <p className="mx-auto mt-3 max-w-md text-center text-xs text-fog-dim">
+          <strong className="text-fog">What&apos;s an &quot;AI generation&quot;?</strong> Each time AI drafts or rewrites a resume, cover letter, or summary counts as one generation. Editing your own text afterward doesn&apos;t use any — only new AI drafts do.
+        </p>
       </div>
     </section>
   );

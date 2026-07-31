@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { CheckCircle2, Clock, ExternalLink } from "lucide-react";
+import { CheckCircle2, Clock, ExternalLink, Sparkles } from "lucide-react";
+import { AI_GENERATION_LIMITS } from "@/lib/ai-usage";
 
 export default async function BillingPage() {
   const supabase = await createClient();
@@ -10,12 +11,19 @@ export default async function BillingPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("plan, subscription_status")
+    .select("plan, subscription_status, ai_usage_count, ai_usage_reset_at")
     .eq("id", user!.id)
     .single();
 
   const isPaid = profile?.subscription_status === "active";
   const isTrialing = profile?.subscription_status === "trialing";
+  const limit = AI_GENERATION_LIMITS[profile?.plan ?? ""] ?? 0;
+  const used = profile?.ai_usage_count ?? 0;
+  const remaining = Math.max(limit - used, 0);
+  const usagePercent = limit > 0 ? Math.min((used / limit) * 100, 100) : 0;
+  const resetDate = profile?.ai_usage_reset_at
+    ? new Date(new Date(profile.ai_usage_reset_at).getTime() + 30 * 24 * 60 * 60 * 1000)
+    : null;
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10 sm:px-10">
@@ -77,6 +85,29 @@ export default async function BillingPage() {
           </a>
         </div>
       </div>
+
+      {isPaid && limit > 0 && (
+        <div className="mt-4 rounded-2xl border border-line bg-surface/40 p-6">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-fog-dim">
+              <Sparkles size={13} className="text-amber" /> AI generations this period
+            </p>
+            <p className="font-mono text-sm text-fog">
+              {used} / {limit}
+            </p>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-surface-2">
+            <div
+              className={`h-full rounded-full ${usagePercent >= 90 ? "bg-coral" : "bg-amber"}`}
+              style={{ width: `${usagePercent}%` }}
+            />
+          </div>
+          <p className="mt-2 text-xs text-fog-dim">
+            {remaining} remaining
+            {resetDate ? ` · resets ${resetDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}` : ""}
+          </p>
+        </div>
+      )}
 
       <p className="mt-4 text-xs text-fog-dim">
         Payments, invoices, and cancellations are handled securely by Whop. Your plan here updates
