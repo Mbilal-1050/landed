@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ScanSearch, Sparkles, FileText, Mail, AlignLeft } from "lucide-react";
 import ATSGauge from "./ATSGauge";
 
 export default function Hero() {
@@ -135,6 +136,28 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.8, duration: 0.6 }}
+        className="mx-auto mt-20 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-5"
+      >
+        {[
+          { icon: ScanSearch, label: "ATS Optimized" },
+          { icon: Sparkles, label: "AI Powered" },
+          { icon: FileText, label: "Resume Builder" },
+          { icon: Mail, label: "Cover Letters" },
+          { icon: AlignLeft, label: "Professional Summaries" },
+        ].map((f) => (
+          <div key={f.label} className="flex flex-col items-center gap-2 text-center">
+            <div className="grid h-10 w-10 place-items-center rounded-full border border-line text-amber">
+              <f.icon size={16} />
+            </div>
+            <span className="text-xs text-fog-dim">{f.label}</span>
+          </div>
+        ))}
+      </motion.div>
     </section>
   );
 }
