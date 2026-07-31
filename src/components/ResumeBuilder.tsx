@@ -163,15 +163,26 @@ export default function ResumeBuilder({
       updated_at: new Date().toISOString(),
     };
 
-    const { error: dbError } = resumeId
-      ? await supabase.from("resumes").update(payload).eq("id", resumeId)
-      : await supabase.from("resumes").insert(payload);
+    const { data: savedRow, error: dbError } = resumeId
+      ? await supabase.from("resumes").update(payload).eq("id", resumeId).select("id").single()
+      : await supabase.from("resumes").insert(payload).select("id").single();
 
     setSaving(false);
     if (dbError) {
       setError(dbError.message);
       return;
     }
+
+    // Snapshot this save into version history
+    if (savedRow?.id) {
+      await supabase.from("resume_versions").insert({
+        resume_id: savedRow.id,
+        user_id: user!.id,
+        title,
+        content: { ...data, job_description: jobDescription },
+      });
+    }
+
     router.push("/dashboard/resumes");
     router.refresh();
   }
@@ -325,7 +336,19 @@ export default function ResumeBuilder({
         </div>
         <motion.button
           whileTap={{ scale: 0.97 }}
-          onClick={() => window.print()}
+          onClick={async () => {
+            if (resumeId) {
+              const {
+                data: { user },
+              } = await supabase.auth.getUser();
+              await supabase.from("resume_events").insert({
+                resume_id: resumeId,
+                user_id: user!.id,
+                event_type: "download",
+              });
+            }
+            window.print();
+          }}
           className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-lg border border-line px-5 py-2.5 text-sm text-fog transition hover:border-amber/50 cursor-pointer"
         >
           <Printer size={15} /> Preview print / Save as PDF

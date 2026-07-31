@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, History } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import ResumeForm from "@/components/ResumeForm";
 import ResumeBuilder from "@/components/ResumeBuilder";
@@ -23,6 +23,12 @@ export default async function EditResumePage({ params }: { params: Promise<{ id:
     .single();
 
   if (!resume) notFound();
+
+  // Fire-and-forget view tracking — doesn't block rendering
+  supabase
+    .from("resume_events")
+    .insert({ resume_id: resume.id, user_id: user!.id, event_type: "view" })
+    .then(() => {});
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -48,7 +54,17 @@ export default async function EditResumePage({ params }: { params: Promise<{ id:
         <Link href="/dashboard/resumes" className="flex items-center gap-1.5 text-sm text-fog-dim hover:text-fog">
           <ArrowLeft size={15} /> Back to documents
         </Link>
-        <DeleteResumeButton id={resume.id} />
+        <div className="flex items-center gap-3">
+          {isStructured && (
+            <Link
+              href={`/dashboard/resumes/${resume.id}/history`}
+              className="flex items-center gap-1.5 rounded-lg border border-line px-4 py-2.5 text-sm text-fog-dim transition hover:border-amber/50 hover:text-fog"
+            >
+              <History size={15} /> History
+            </Link>
+          )}
+          <DeleteResumeButton id={resume.id} />
+        </div>
       </div>
       <h1 className="mb-8 font-display text-3xl text-fog">{resume.title}</h1>
 
