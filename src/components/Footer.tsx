@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoFull } from "./Logo";
 import { XIcon, LinkedInIcon, InstagramIcon } from "./BrandIcons";
 import NewsletterForm from "./NewsletterForm";
 import { CATEGORIES } from "@/lib/resume-templates/registry";
@@ -15,8 +16,8 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 sm:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="font-display text-xl text-fog">
-              Landed<span className="text-amber">.</span>
+            <Link href="/" className="inline-flex">
+              <LogoFull size={22} />
             </Link>
             <p className="mt-3 max-w-xs text-sm text-fog-dim">
               Resumes tailored to the exact job you&apos;re applying to, scored before you send them.

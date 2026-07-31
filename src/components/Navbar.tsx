@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import { LogoFull } from "./Logo";
 import { useTheme } from "./ThemeProvider";
 
 export default function Navbar() {
@@ -26,8 +27,8 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 sm:px-10">
-        <Link href="/" className="font-display text-xl tracking-tight text-fog">
-          Landed<span className="text-amber">.</span>
+        <Link href="/" className="flex items-center">
+          <LogoFull size={24} />
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-fog-dim sm:flex">
           <Link href="/#how" className="transition hover:text-fog">How it works</Link>

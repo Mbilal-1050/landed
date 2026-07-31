@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogoFull } from "./Logo";
 import {
   LayoutGrid,
   FileText,
@@ -34,8 +35,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex h-full flex-col px-4 py-6">
-      <Link href="/" className="mb-8 px-2 font-display text-xl text-fog">
-        Landed<span className="text-amber">.</span>
+      <Link href="/" className="mb-8 px-2 inline-flex">
+        <LogoFull size={22} />
       </Link>
 
       <nav className="flex flex-1 flex-col gap-1">
@@ -90,8 +91,8 @@ export default function DashboardSidebar() {
 
       {/* Mobile top bar */}
       <div className="sticky top-0 z-40 flex items-center justify-between border-b border-line bg-ink/90 px-4 py-3 backdrop-blur-md md:hidden">
-        <Link href="/" className="font-display text-lg text-fog">
-          Landed<span className="text-amber">.</span>
+        <Link href="/" className="inline-flex">
+          <LogoFull size={20} />
         </Link>
         <button
           onClick={() => setOpen(true)}
