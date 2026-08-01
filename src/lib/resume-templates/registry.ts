@@ -8,11 +8,15 @@ import Clarity from "@/components/resume-templates/Clarity";
 import TwoColumnSidebar from "@/components/resume-templates/TwoColumnSidebar";
 import Harbor from "@/components/resume-templates/Harbor";
 import CreativeColorful from "@/components/resume-templates/CreativeColorful";
+import Bloom from "@/components/resume-templates/Bloom";
 import ExecutiveClassic from "@/components/resume-templates/ExecutiveClassic";
+import Podium from "@/components/resume-templates/Podium";
 import Academic from "@/components/resume-templates/Academic";
+import Thesis from "@/components/resume-templates/Thesis";
 import TechDeveloper from "@/components/resume-templates/TechDeveloper";
 import Cursor from "@/components/resume-templates/Cursor";
 import EntryLevel from "@/components/resume-templates/EntryLevel";
+import Launch from "@/components/resume-templates/Launch";
 
 export interface LayoutDef {
   id: string;
@@ -29,11 +33,15 @@ export const LAYOUTS: LayoutDef[] = [
   { id: "two-column-sidebar", name: "Meridian", category: "Two-Column", component: TwoColumnSidebar },
   { id: "harbor", name: "Harbor", category: "Two-Column", component: Harbor },
   { id: "creative-colorful", name: "Prism", category: "Creative", component: CreativeColorful },
+  { id: "bloom", name: "Bloom", category: "Creative", component: Bloom },
   { id: "executive-classic", name: "Sterling", category: "Executive", component: ExecutiveClassic },
+  { id: "podium", name: "Podium", category: "Executive", component: Podium },
   { id: "academic", name: "Scholar", category: "Academic", component: Academic },
+  { id: "thesis", name: "Thesis", category: "Academic", component: Thesis },
   { id: "tech-developer", name: "Terminal", category: "Tech & Developer", component: TechDeveloper },
   { id: "cursor", name: "Cursor", category: "Tech & Developer", component: Cursor },
   { id: "entry-level", name: "Horizon", category: "Entry-Level", component: EntryLevel },
+  { id: "launch", name: "Launch", category: "Entry-Level", component: Launch },
 ];
 
 export const CATEGORIES: TemplateCategory[] = [
