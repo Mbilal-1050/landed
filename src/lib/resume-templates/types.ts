@@ -16,6 +16,11 @@ export interface ResumeProject {
   description: string;
 }
 
+export interface ResumeCertificate {
+  name: string;
+  url: string;
+}
+
 export interface ResumeData {
   fullName: string;
   targetRole: string;
@@ -29,7 +34,7 @@ export interface ResumeData {
   education: ResumeEducation[];
   skills: string[];
   projects?: ResumeProject[];
-  certifications?: string[];
+  certifications?: ResumeCertificate[];
   languages?: string[];
 }
 

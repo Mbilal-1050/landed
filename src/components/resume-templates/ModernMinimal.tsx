@@ -5,9 +5,15 @@ export default function ModernMinimal({ data }: { data: ResumeData }) {
   return (
     <div className="bg-white p-10 text-[#16202e] font-sans text-[13px] leading-relaxed">
       <div className="flex items-start justify-between border-b-2 pb-4" style={{ borderColor: "var(--r-accent)" }}>
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">{data.fullName}</h1>
-          <p className="mt-1 text-sm" style={{ color: "var(--r-accent)" }}>{data.targetRole}</p>
+        <div className="flex items-center gap-4">
+          {data.photoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element -- print/export document, not a Next-optimized page
+            <img src={data.photoUrl} alt="" className="h-16 w-16 rounded-full object-cover" />
+          )}
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">{data.fullName}</h1>
+            <p className="mt-1 text-sm" style={{ color: "var(--r-accent)" }}>{data.targetRole}</p>
+          </div>
         </div>
         <div className="text-right text-xs text-gray-500 leading-relaxed">
           {data.email && <p>{data.email}</p>}

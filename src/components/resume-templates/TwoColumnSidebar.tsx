@@ -4,6 +4,10 @@ export default function TwoColumnSidebar({ data }: { data: ResumeData }) {
   return (
     <div className="flex bg-white text-[#16202e] font-sans text-[13px] leading-relaxed min-h-full">
       <aside className="w-[34%] p-6 text-white" style={{ backgroundColor: "var(--r-ink)" }}>
+        {data.photoUrl && (
+          // eslint-disable-next-line @next/next/no-img-element -- print/export document
+          <img src={data.photoUrl} alt="" className="mb-4 h-20 w-20 rounded-full object-cover" />
+        )}
         <h1 className="text-xl font-semibold">{data.fullName}</h1>
         <p className="mt-1 text-sm" style={{ color: "var(--r-accent-soft)" }}>{data.targetRole}</p>
 

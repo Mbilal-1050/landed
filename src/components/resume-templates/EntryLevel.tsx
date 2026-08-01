@@ -7,8 +7,16 @@ export default function EntryLevel({ data }: { data: ResumeData }) {
   return (
     <div className="bg-white p-10 text-[#16202e] font-sans text-[13px] leading-relaxed">
       <div className="rounded-2xl p-5" style={{ backgroundColor: "var(--r-accent-soft)" }}>
-        <h1 className="text-2xl font-bold">{data.fullName}</h1>
-        <p style={{ color: "var(--r-accent)" }}>{data.targetRole}</p>
+        <div className="flex items-center gap-3">
+          {data.photoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element -- print/export document
+            <img src={data.photoUrl} alt="" className="h-14 w-14 rounded-full object-cover" />
+          )}
+          <div>
+            <h1 className="text-2xl font-bold">{data.fullName}</h1>
+            <p style={{ color: "var(--r-accent)" }}>{data.targetRole}</p>
+          </div>
+        </div>
         <p className="mt-1 text-xs text-gray-600">
           {[data.email, data.phone, data.location].filter(Boolean).join(" · ")}
         </p>

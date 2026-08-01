@@ -5,8 +5,16 @@ export default function CreativeColorful({ data }: { data: ResumeData }) {
   return (
     <div className="bg-white text-[#16202e] font-sans text-[13px] leading-relaxed">
       <div className="p-8 text-white" style={{ backgroundColor: "var(--r-accent)" }}>
-        <h1 className="text-3xl font-bold">{data.fullName}</h1>
-        <p className="mt-1 text-white/90">{data.targetRole}</p>
+        <div className="flex items-center gap-4">
+          {data.photoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element -- print/export document
+            <img src={data.photoUrl} alt="" className="h-16 w-16 rounded-full border-2 border-white/50 object-cover" />
+          )}
+          <div>
+            <h1 className="text-3xl font-bold">{data.fullName}</h1>
+            <p className="mt-1 text-white/90">{data.targetRole}</p>
+          </div>
+        </div>
         <div className="mt-3 flex flex-wrap gap-3 text-xs text-white/80">
           {data.email && <span>{data.email}</span>}
           {data.phone && <span>{data.phone}</span>}

@@ -4,13 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Sparkles, Printer, Save, Palette } from "lucide-react";
+import { Plus, Trash2, Sparkles, Printer, Save, Palette, ArrowUp, ArrowDown } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { scoreResumeAgainstJob } from "@/lib/ats";
 import { getLayout, getTheme } from "@/lib/resume-templates/registry";
 import { themeStyle } from "@/lib/resume-templates/themes";
-import type { ResumeData, ResumeExperience, ResumeEducation } from "@/lib/resume-templates/types";
+import type { ResumeData, ResumeExperience, ResumeEducation, ResumeCertificate } from "@/lib/resume-templates/types";
 import LogoUpload from "./LogoUpload";
+import PhotoCropUpload from "./PhotoCropUpload";
+import CertificateUpload from "./CertificateUpload";
 
 const EMPTY_DATA: ResumeData = {
   fullName: "",
@@ -64,6 +66,14 @@ export default function ResumeBuilder({
     setData((prev) => ({ ...prev, [key]: value }));
   }
 
+  function moveItem<T>(list: T[], from: number, to: number): T[] {
+    if (to < 0 || to >= list.length) return list;
+    const next = [...list];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    return next;
+  }
+
   function addExperience() {
     update("experience", [...data.experience, { title: "", company: "", dates: "", bullets: [""] } as ResumeExperience]);
   }
@@ -74,6 +84,9 @@ export default function ResumeBuilder({
   }
   function removeExperience(i: number) {
     update("experience", data.experience.filter((_, idx) => idx !== i));
+  }
+  function moveExperience(i: number, dir: -1 | 1) {
+    update("experience", moveItem(data.experience, i, i + dir));
   }
 
   function addEducation() {
@@ -86,6 +99,9 @@ export default function ResumeBuilder({
   }
   function removeEducation(i: number) {
     update("education", data.education.filter((_, idx) => idx !== i));
+  }
+  function moveEducation(i: number, dir: -1 | 1) {
+    update("education", moveItem(data.education, i, i + dir));
   }
 
   async function handleAiFill() {
@@ -254,7 +270,15 @@ export default function ResumeBuilder({
 
         <textarea value={data.summary} onChange={(e) => update("summary", e.target.value)} rows={3} placeholder="Professional summary" className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm outline-none placeholder:text-fog-dim focus:border-amber/60" />
 
-        <LogoUpload value={logoUrl} onChange={setLogoUrl} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <PhotoCropUpload value={data.photoUrl} onChange={(url) => update("photoUrl", url)} />
+          <LogoUpload value={logoUrl} onChange={setLogoUrl} />
+        </div>
+
+        <CertificateUpload
+          value={data.certifications ?? []}
+          onChange={(files: ResumeCertificate[]) => update("certifications", files)}
+        />
 
         <div>
           <div className="mb-2 flex items-center justify-between">
@@ -271,6 +295,10 @@ export default function ResumeBuilder({
                     <input value={exp.dates} onChange={(e) => updateExperience(i, { dates: e.target.value })} placeholder="Dates" className="rounded border border-line bg-surface px-2 py-1.5 text-xs outline-none" />
                   </div>
                   <button onClick={() => removeExperience(i)} className="text-fog-dim hover:text-coral cursor-pointer"><Trash2 size={14} /></button>
+                  <div className="flex flex-col">
+                    <button onClick={() => moveExperience(i, -1)} disabled={i === 0} className="text-fog-dim hover:text-amber disabled:opacity-30 cursor-pointer"><ArrowUp size={12} /></button>
+                    <button onClick={() => moveExperience(i, 1)} disabled={i === data.experience.length - 1} className="text-fog-dim hover:text-amber disabled:opacity-30 cursor-pointer"><ArrowDown size={12} /></button>
+                  </div>
                 </div>
                 <textarea
                   value={exp.bullets.join("\n")}
@@ -296,6 +324,10 @@ export default function ResumeBuilder({
                 <input value={edu.school} onChange={(e) => updateEducation(i, { school: e.target.value })} placeholder="School" className="flex-1 rounded border border-line bg-surface px-2 py-1.5 text-xs outline-none" />
                 <input value={edu.dates} onChange={(e) => updateEducation(i, { dates: e.target.value })} placeholder="Dates" className="w-20 rounded border border-line bg-surface px-2 py-1.5 text-xs outline-none" />
                 <button onClick={() => removeEducation(i)} className="text-fog-dim hover:text-coral cursor-pointer"><Trash2 size={14} /></button>
+                <div className="flex flex-col">
+                  <button onClick={() => moveEducation(i, -1)} disabled={i === 0} className="text-fog-dim hover:text-amber disabled:opacity-30 cursor-pointer"><ArrowUp size={12} /></button>
+                  <button onClick={() => moveEducation(i, 1)} disabled={i === data.education.length - 1} className="text-fog-dim hover:text-amber disabled:opacity-30 cursor-pointer"><ArrowDown size={12} /></button>
+                </div>
               </div>
             ))}
           </div>
