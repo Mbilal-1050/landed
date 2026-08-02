@@ -56,7 +56,7 @@ export default function Footer() {
             <p className="mb-3 text-xs font-medium uppercase tracking-wide text-fog">Templates</p>
             <ul className="space-y-2 text-sm text-fog-dim">
               <li><Link href="/templates" className="hover:text-fog">All templates</Link></li>
-              {CATEGORIES.slice(0, 5).map((c) => (
+              {CATEGORIES.map((c) => (
                 <li key={c}>
                   <Link href={`/templates?category=${encodeURIComponent(c)}`} className="hover:text-fog">
                     {c}
