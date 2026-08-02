@@ -50,22 +50,22 @@ export default function TemplateShowcase() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.04, 0.4), duration: 0.4 }}
-                className="w-40 shrink-0 snap-start sm:w-48"
+                className="w-64 shrink-0 snap-start"
               >
                 <Link
                   href={`/templates?category=${encodeURIComponent(layout.category)}`}
                   className="block overflow-hidden rounded-xl border border-line bg-white transition hover:border-amber/40"
                 >
-                  <div className="relative h-48 overflow-hidden sm:h-56">
+                  <div className="relative h-[330px] overflow-hidden">
                     <div
                       className="absolute left-0 top-0 origin-top-left"
-                      style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.235)" }}
+                      style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.3137)" }}
                     >
                       <Comp data={SAMPLE_PROFILES[layout.category]} />
                     </div>
                   </div>
                 </Link>
-                <p className="mt-2 text-center text-xs text-fog-dim">{layout.name}</p>
+                <p className="mt-2 text-center text-sm text-fog-dim">{layout.name}</p>
               </motion.div>
             );
           })}

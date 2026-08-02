@@ -85,10 +85,10 @@ export default function TemplateGallery({
                 isSelected ? "border-amber ring-1 ring-amber" : "border-line hover:border-amber/40"
               }`}
             >
-              <div className="relative h-40 overflow-hidden bg-white">
+              <div className="relative h-64 overflow-hidden bg-white">
                 <div
                   className="absolute left-0 top-0 origin-top-left"
-                  style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.196)" }}
+                  style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.28)" }}
                 >
                   <Comp data={SAMPLE_PROFILES[v.category]} />
                 </div>

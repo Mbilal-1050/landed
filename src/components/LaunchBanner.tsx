@@ -17,7 +17,7 @@ export default function LaunchBanner() {
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto mb-10 flex max-w-xl flex-col items-center gap-3 rounded-2xl border border-amber/30 bg-amber/5 px-6 py-5 text-center sm:flex-row sm:justify-between sm:text-left"
+      className="mx-auto mb-10 flex max-w-xl flex-col items-center gap-3 rounded-2xl border border-amber/30 bg-amber/[0.06] px-6 py-5 text-center sm:flex-row sm:justify-between sm:text-left"
     >
       <div className="flex items-center gap-3">
         <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-amber/15 text-amber">
@@ -30,7 +30,7 @@ export default function LaunchBanner() {
       </div>
       <button
         onClick={copy}
-        className="flex shrink-0 items-center gap-2 rounded-lg border border-amber/40 bg-ink px-4 py-2 font-mono text-sm text-amber transition hover:bg-amber/10 cursor-pointer"
+        className="flex shrink-0 items-center gap-2 rounded-lg border border-amber/40 bg-surface px-4 py-2 font-mono text-sm text-amber transition hover:bg-amber/10 cursor-pointer"
       >
         LAUNCH50 {copied ? <Check size={14} /> : <Copy size={14} />}
       </button>
