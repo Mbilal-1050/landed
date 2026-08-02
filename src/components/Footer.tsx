@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { LogoFull } from "./Logo";
-import { XIcon, LinkedInIcon, InstagramIcon } from "./BrandIcons";
 import NewsletterForm from "./NewsletterForm";
 import { CATEGORIES } from "@/lib/resume-templates/registry";
 
-const SOCIALS = [
-  { icon: XIcon, href: "https://x.com/landedofficial", label: "X (Twitter)" },
-  { icon: LinkedInIcon, href: "https://linkedin.com/company/landedofficial", label: "LinkedIn" },
-  { icon: InstagramIcon, href: "https://instagram.com/landedofficial", label: "Instagram" },
-];
+// TODO: fill in once real, confirmed social accounts exist — e.g.
+// import { XIcon, LinkedInIcon, InstagramIcon } from "./BrandIcons";
+// { icon: XIcon, href: "https://x.com/yourhandle", label: "X (Twitter)" }
+const SOCIALS: { icon: (props: { size?: number }) => React.JSX.Element; href: string; label: string }[] = [];
 
 export default function Footer() {
   return (
@@ -22,20 +20,22 @@ export default function Footer() {
             <p className="mt-3 max-w-xs text-sm text-fog-dim">
               Resumes tailored to the exact job you&apos;re applying to, scored before you send them.
             </p>
-            <div className="mt-5 flex gap-2">
-              {SOCIALS.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="grid h-8 w-8 place-items-center rounded-full border border-line text-fog-dim transition hover:border-amber/50 hover:text-amber"
-                >
-                  <s.icon size={14} />
-                </a>
-              ))}
-            </div>
+            {SOCIALS.length > 0 && (
+              <div className="mt-5 flex gap-2">
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="grid h-8 w-8 place-items-center rounded-full border border-line text-fog-dim transition hover:border-amber/50 hover:text-amber"
+                  >
+                    <s.icon size={14} />
+                  </a>
+                ))}
+              </div>
+            )}
             <div className="mt-5">
               <p className="mb-2 text-xs text-fog-dim">Get product updates</p>
               <NewsletterForm />

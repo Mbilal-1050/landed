@@ -85,63 +85,95 @@ export default function Hero() {
           />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
-          transition={{
-            opacity: { duration: 0.8, delay: 0.3 },
-            scale: { duration: 0.8, delay: 0.3 },
-            y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 },
-          }}
-          className="relative rounded-2xl border border-line bg-surface/40 p-8 shadow-[0_0_60px_-15px_rgba(232,163,61,0.15)]"
-        >
+        <div className="relative">
+          {/* Resume paper mockup */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
-            animate={{ opacity: 1, scale: 1, rotate: -6 }}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="absolute -left-6 -top-4 hidden items-center gap-1.5 rounded-full border border-line bg-ink px-3 py-1.5 font-mono text-[10px] text-teal shadow-lg sm:flex"
+            initial={{ opacity: 0, scale: 0.9, rotate: -6 }}
+            animate={{ opacity: 1, scale: 1, rotate: -3 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative mx-auto w-full max-w-xs rounded-2xl bg-white p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.4)] sm:max-w-sm"
           >
-            ✓ keywords matched
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: 6 }}
-            animate={{ opacity: 1, scale: 1, rotate: 4 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="absolute -right-4 top-1/3 hidden rounded-full border border-line bg-ink px-3 py-1.5 font-mono text-[10px] text-amber shadow-lg sm:block"
-          >
-            real-time scoring
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 shrink-0 rounded-full" style={{ background: "linear-gradient(135deg,#f5cd8b,#c8791f)" }} />
+              <div className="flex-1">
+                <div className="h-2.5 w-24 rounded-full bg-[#16202e]/80" />
+                <div className="mt-1.5 h-2 w-16 rounded-full bg-amber/60" />
+              </div>
+            </div>
+            <div className="mt-4 space-y-1.5">
+              <div className="h-1.5 w-full rounded-full bg-gray-200" />
+              <div className="h-1.5 w-[85%] rounded-full bg-gray-200" />
+              <div className="h-1.5 w-[70%] rounded-full bg-gray-200" />
+            </div>
+            <div className="mt-4 h-1.5 w-20 rounded-full bg-[#16202e]/70" />
+            <div className="mt-2.5 space-y-1.5">
+              <div className="h-1.5 w-full rounded-full bg-gray-200" />
+              <div className="h-1.5 w-[90%] rounded-full bg-gray-200" />
+              <div className="h-1.5 w-[60%] rounded-full bg-gray-200" />
+            </div>
+            <div className="mt-4 h-1.5 w-16 rounded-full bg-[#16202e]/70" />
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="h-4 w-12 rounded-full bg-amber/15" />
+              ))}
+            </div>
           </motion.div>
 
-          <p className="mb-4 text-center font-mono text-xs uppercase tracking-widest text-fog-dim">
-            Live scan against job posting
-          </p>
-          <ATSGauge />
-          <div className="mt-6 space-y-2 font-mono text-xs text-fog-dim">
-            {[
-              { label: "Keywords matched", value: "18 / 20", color: "text-teal" },
-              { label: "Formatting", value: "passes", color: "text-teal" },
-              { label: "Missing skills flagged", value: "2", color: "text-coral" },
-            ].map((row, i) => (
-              <motion.div
-                key={row.label}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 1.6 + i * 0.15 }}
-                className="flex justify-between"
-              >
-                <span>{row.label}</span>
-                <span className={row.color}>{row.value}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          {/* Floating AI Assistant badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: [0, -6, 0] }}
+            transition={{
+              opacity: { duration: 0.6, delay: 1 },
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.2 },
+            }}
+            className="absolute -right-2 top-6 hidden items-center gap-1.5 rounded-full border border-line bg-ink px-3 py-1.5 font-mono text-[10px] text-amber shadow-lg sm:flex"
+          >
+            <Sparkles size={11} /> AI Assistant active
+          </motion.div>
+
+          {/* Floating ATS match score card, overlapping the mockup */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: 6, y: 20 }}
+            animate={{ opacity: 1, scale: 1, rotate: 3, y: [0, -8, 0] }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.6 },
+              scale: { duration: 0.8, delay: 0.6 },
+              y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 },
+            }}
+            className="absolute -bottom-10 -right-6 w-52 rounded-2xl border border-line bg-surface/95 p-4 shadow-[0_0_60px_-15px_rgba(232,163,61,0.25)] backdrop-blur sm:-right-10"
+          >
+            <p className="mb-2 text-center font-mono text-[9px] uppercase tracking-widest text-fog-dim">
+              Live ATS Scan
+            </p>
+            <ATSGauge size={130} />
+            <div className="mt-3 space-y-1.5 font-mono text-[10px] text-fog-dim">
+              {[
+                { label: "Keywords matched", value: "18 / 20", color: "text-teal" },
+                { label: "Formatting", value: "passes", color: "text-teal" },
+                { label: "Missing skills", value: "2", color: "text-coral" },
+              ].map((row, i) => (
+                <motion.div
+                  key={row.label}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 1.6 + i * 0.15 }}
+                  className="flex justify-between"
+                >
+                  <span>{row.label}</span>
+                  <span className={row.color}>{row.value}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.8, duration: 0.6 }}
-        className="mx-auto mt-20 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-5"
+        className="mx-auto mt-24 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-5 sm:mt-32"
       >
         {[
           { icon: ScanSearch, label: "ATS Optimized" },

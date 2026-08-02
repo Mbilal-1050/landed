@@ -71,7 +71,7 @@ export default async function ReferralsPage() {
           every paying customer you bring — paid out automatically by Whop, for as long as they stay subscribed.
         </p>
         <a
-          href="https://whop.com/landed"
+          href="https://whop.com/landed/affiliates"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft"

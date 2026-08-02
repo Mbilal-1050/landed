@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, animate } from "framer-motion";
 
-export default function ATSGauge() {
+export default function ATSGauge({ size = 224 }: { size?: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [display, setDisplay] = useState(0);
   const target = 92;
-  const radius = 84;
+  const radius = (size / 224) * 84;
+  const center = size / 2;
   const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
@@ -22,25 +23,26 @@ export default function ATSGauge() {
   }, [inView]);
 
   const offset = circumference - (display / 100) * circumference;
+  const strokeWidth = Math.max((size / 224) * 10, 5);
 
   return (
-    <div ref={ref} className="relative mx-auto flex h-56 w-56 items-center justify-center">
-      <svg width="224" height="224" viewBox="0 0 224 224" className="-rotate-90">
+    <div ref={ref} className="relative mx-auto flex items-center justify-center" style={{ height: size, width: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
         <circle
-          cx="112"
-          cy="112"
+          cx={center}
+          cy={center}
           r={radius}
           fill="none"
           stroke="var(--color-line)"
-          strokeWidth="10"
+          strokeWidth={strokeWidth}
         />
         <motion.circle
-          cx="112"
-          cy="112"
+          cx={center}
+          cy={center}
           r={radius}
           fill="none"
           stroke="var(--color-amber)"
-          strokeWidth="10"
+          strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
@@ -49,8 +51,8 @@ export default function ATSGauge() {
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="font-mono text-4xl font-medium text-fog">{display}%</span>
-        <span className="mt-1 text-xs uppercase tracking-widest text-fog-dim">match score</span>
+        <span className="font-mono font-medium text-fog" style={{ fontSize: size * 0.17 }}>{display}%</span>
+        <span className="mt-1 text-fog-dim" style={{ fontSize: Math.max(size * 0.045, 8) }}>match score</span>
       </div>
     </div>
   );
