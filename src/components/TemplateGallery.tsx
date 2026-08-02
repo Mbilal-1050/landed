@@ -71,7 +71,7 @@ export default function TemplateGallery({
 
       <p className="mb-4 text-xs text-fog-dim">{filtered.length} templates</p>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filtered.map((v) => {
           const Comp = v.component;
           const theme = getTheme(v.themeId);
@@ -85,10 +85,10 @@ export default function TemplateGallery({
                 isSelected ? "border-amber ring-1 ring-amber" : "border-line hover:border-amber/40"
               }`}
             >
-              <div className="relative h-64 overflow-hidden bg-white">
+              <div className="relative h-96 overflow-hidden bg-white">
                 <div
                   className="absolute left-0 top-0 origin-top-left"
-                  style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.28)" }}
+                  style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.39)" }}
                 >
                   <Comp data={SAMPLE_PROFILES[v.category]} />
                 </div>
@@ -98,9 +98,9 @@ export default function TemplateGallery({
                   </div>
                 )}
               </div>
-              <div className="p-3">
-                <p className="text-xs font-medium text-fog">{v.layoutName}</p>
-                <p className="text-[11px] text-fog-dim">{v.themeName} theme</p>
+              <div className="p-4">
+                <p className="text-sm font-medium text-fog">{v.layoutName}</p>
+                <p className="text-xs text-fog-dim">{v.themeName} theme</p>
               </div>
             </motion.button>
           );

@@ -67,8 +67,11 @@ export default async function ReferralsPage() {
           <p className="text-sm font-medium">Want to earn real money?</p>
         </div>
         <p className="text-sm text-fog-dim">
-          Join our paid affiliate program on Whop and earn <strong className="text-fog">30% recurring commission</strong> for
-          every paying customer you bring — paid out automatically by Whop, for as long as they stay subscribed.
+          Join Landed&apos;s affiliate program and earn <strong className="text-fog">30% recurring commission</strong> for
+          every paying customer you bring — for as long as they stay subscribed.
+        </p>
+        <p className="mt-2 text-xs text-fog-dim">
+          Payouts processed securely — powered by our payment partner.
         </p>
         <a
           href="https://whop.com/landed/affiliates"
@@ -76,7 +79,7 @@ export default async function ReferralsPage() {
           rel="noopener noreferrer"
           className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-amber px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft"
         >
-          Become an affiliate on Whop <ExternalLink size={13} />
+          Activate payouts <ExternalLink size={13} />
         </a>
       </div>
     </main>
