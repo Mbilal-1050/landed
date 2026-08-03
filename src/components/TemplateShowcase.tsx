@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { LAYOUTS } from "@/lib/resume-templates/registry";
 import { COLOR_THEMES, themeStyle } from "@/lib/resume-templates/themes";
 import { SAMPLE_PROFILES } from "@/lib/resume-templates/types";
+import ResumePreviewFrame from "./ResumePreviewFrame";
 
 // One card per layout (all 16), cycling through color themes for variety —
 // gives an honest, scrollable sense of the full range without claiming
@@ -50,20 +51,17 @@ export default function TemplateShowcase() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.04, 0.4), duration: 0.4 }}
-                className="w-64 shrink-0 snap-start"
+                className="w-[320px] shrink-0 snap-start sm:w-[380px]"
               >
                 <Link
                   href={`/templates?category=${encodeURIComponent(layout.category)}`}
                   className="block overflow-hidden rounded-xl border border-line bg-white transition hover:border-amber/40"
                 >
-                  <div className="relative h-[330px] overflow-hidden">
-                    <div
-                      className="absolute left-0 top-0 origin-top-left"
-                      style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.3137)" }}
-                    >
+                  <ResumePreviewFrame>
+                    <div style={themeStyle(theme)}>
                       <Comp data={SAMPLE_PROFILES[layout.category]} />
                     </div>
-                  </div>
+                  </ResumePreviewFrame>
                 </Link>
                 <p className="mt-2 text-center text-sm text-fog-dim">{layout.name}</p>
               </motion.div>

@@ -7,6 +7,7 @@ import { Search, Check } from "lucide-react";
 import { TEMPLATE_VARIANTS, CATEGORIES, getTheme } from "@/lib/resume-templates/registry";
 import { themeStyle } from "@/lib/resume-templates/themes";
 import { SAMPLE_PROFILES } from "@/lib/resume-templates/types";
+import ResumePreviewFrame from "./ResumePreviewFrame";
 
 export default function TemplateGallery({
   onSelect,
@@ -71,7 +72,7 @@ export default function TemplateGallery({
 
       <p className="mb-4 text-xs text-fog-dim">{filtered.length} templates</p>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
         {filtered.map((v) => {
           const Comp = v.component;
           const theme = getTheme(v.themeId);
@@ -85,16 +86,15 @@ export default function TemplateGallery({
                 isSelected ? "border-amber ring-1 ring-amber" : "border-line hover:border-amber/40"
               }`}
             >
-              <div className="relative h-96 overflow-hidden bg-white">
-                <div
-                  className="absolute left-0 top-0 origin-top-left"
-                  style={{ ...themeStyle(theme), width: "816px", height: "1056px", transform: "scale(0.39)" }}
-                >
-                  <Comp data={SAMPLE_PROFILES[v.category]} />
-                </div>
+              <div className="relative bg-white">
+                <ResumePreviewFrame>
+                  <div style={themeStyle(theme)}>
+                    <Comp data={SAMPLE_PROFILES[v.category]} />
+                  </div>
+                </ResumePreviewFrame>
                 {isSelected && (
-                  <div className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-amber text-ink">
-                    <Check size={13} />
+                  <div className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full bg-amber text-ink">
+                    <Check size={14} />
                   </div>
                 )}
               </div>
