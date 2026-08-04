@@ -1,12 +1,27 @@
+"use client";
+
+import { useId } from "react";
+
 export function LogoMark({ size = 32 }: { size?: number }) {
+  const uid = useId();
+  const ringId = `landed-ring-${uid}`;
+  const lId = `landed-l-${uid}`;
+
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+    >
       <circle cx="50" cy="50" r="46" fill="#0b1220" />
       <circle
         cx="50"
         cy="50"
         r="40"
-        stroke="url(#landed-ring)"
+        stroke={`url(#${ringId})`}
         strokeWidth="4"
         strokeLinecap="round"
         strokeDasharray="180 71"
@@ -24,19 +39,16 @@ export function LogoMark({ size = 32 }: { size?: number }) {
         strokeDashoffset="-183"
         transform="rotate(-90 50 50)"
       />
-      <path
-        d="M38 30h9v30h15v8H38z"
-        fill="url(#landed-l)"
-      />
+      <path d="M38 30h9v30h15v8H38z" fill={`url(#${lId})`} />
       <rect x="65" y="38" width="14" height="3.4" rx="1.7" fill="#e9edf4" />
       <rect x="65" y="45" width="10" height="3.4" rx="1.7" fill="#e9edf4" opacity="0.75" />
       <circle cx="61" cy="39.7" r="2.2" fill="#e8a33d" />
       <defs>
-        <linearGradient id="landed-ring" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+        <linearGradient id={ringId} x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
           <stop stopColor="#f5cd8b" />
           <stop offset="1" stopColor="#c8791f" />
         </linearGradient>
-        <linearGradient id="landed-l" x1="38" y1="30" x2="62" y2="68" gradientUnits="userSpaceOnUse">
+        <linearGradient id={lId} x1="38" y1="30" x2="62" y2="68" gradientUnits="userSpaceOnUse">
           <stop stopColor="#f5cd8b" />
           <stop offset="1" stopColor="#e8a33d" />
         </linearGradient>

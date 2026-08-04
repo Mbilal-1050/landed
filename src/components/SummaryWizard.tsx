@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Sparkles, Check, Copy } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { COLOR_THEMES } from "@/lib/resume-templates/themes";
 
 export default function SummaryWizard() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function SummaryWizard() {
   const [targetRole, setTargetRole] = useState("");
   const [background, setBackground] = useState("");
   const [tone, setTone] = useState("confident and concise");
+  const [themeId, setThemeId] = useState("amber");
 
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +53,7 @@ export default function SummaryWizard() {
       title: `Summary — ${targetRole}`,
       target_role: targetRole,
       doc_type: "summary",
+      color_theme: themeId,
       content: result,
     });
 
@@ -103,6 +106,20 @@ export default function SummaryWizard() {
             <option>formal and executive</option>
             <option>bold and results-driven</option>
           </select>
+        </div>
+        <div>
+          <label className="mb-1.5 block text-xs text-fog-dim">Accent color</label>
+          <div className="flex gap-2">
+            {COLOR_THEMES.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setThemeId(t.id)}
+                className={`h-6 w-6 rounded-full border-2 cursor-pointer ${themeId === t.id ? "border-fog" : "border-transparent"}`}
+                style={{ backgroundColor: t.accent }}
+                aria-label={t.name}
+              />
+            ))}
+          </div>
         </div>
         {error && <p className="text-sm text-coral">{error}</p>}
         <button

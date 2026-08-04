@@ -93,6 +93,8 @@ export default async function EditResumePage({ params }: { params: Promise<{ id:
         <DocumentViewer
           docType={resume.doc_type as "cover_letter" | "summary"}
           content={content}
+          templateId={resume.template_id}
+          colorTheme={resume.color_theme}
         />
       )}
     </main>
