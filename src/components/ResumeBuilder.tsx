@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Trash2, Sparkles, Printer, Save, Palette, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, Trash2, Sparkles, Printer, Save, Palette, ArrowUp, ArrowDown, ScanSearch } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { scoreResumeAgainstJob } from "@/lib/ats";
+import { scoreResumeAgainstJob, type AtsResult } from "@/lib/ats";
 import { getLayout, getTheme } from "@/lib/resume-templates/registry";
 import { themeStyle } from "@/lib/resume-templates/themes";
 import type { ResumeData, ResumeExperience, ResumeEducation, ResumeCertificate } from "@/lib/resume-templates/types";
@@ -55,6 +55,8 @@ export default function ResumeBuilder({
   const [aiOpen, setAiOpen] = useState(!initialData && aiAvailable);
   const [workHistoryDraft, setWorkHistoryDraft] = useState("");
   const [jobDescription, setJobDescription] = useState("");
+  const [atsResult, setAtsResult] = useState<AtsResult | null>(null);
+  const [scanning, setScanning] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -149,6 +151,19 @@ export default function ResumeBuilder({
       data.skills.join(" "),
       ...data.education.map((e) => `${e.degree} ${e.school}`),
     ].join("\n");
+  }
+
+  function handleScan() {
+    if (!jobDescription.trim()) {
+      setError("Paste a job description first to check your match score.");
+      return;
+    }
+    setScanning(true);
+    setError(null);
+    setTimeout(() => {
+      setAtsResult(scoreResumeAgainstJob(resumeTextForScoring(), jobDescription));
+      setScanning(false);
+    }, 500);
   }
 
   async function handleSave() {
@@ -256,6 +271,57 @@ export default function ResumeBuilder({
                 <Sparkles size={14} /> {generating ? "Drafting…" : "Fill in with AI"}
               </button>
             </div>
+          )}
+        </div>
+
+        <div className="rounded-xl border border-teal/30 bg-teal/5 p-4">
+          <p className="mb-3 flex items-center gap-1.5 text-sm font-medium text-fog">
+            <ScanSearch size={14} className="text-teal" /> Check your ATS match score
+          </p>
+          <textarea
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            rows={4}
+            placeholder="Paste the job description you're applying to — free, no AI required."
+            className="w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm outline-none placeholder:text-fog-dim focus:border-teal/60"
+          />
+          <button
+            onClick={handleScan}
+            disabled={scanning}
+            className="mt-3 flex items-center gap-1.5 rounded-lg bg-teal px-4 py-2 text-sm font-semibold text-ink transition hover:opacity-90 disabled:opacity-50 cursor-pointer"
+          >
+            <ScanSearch size={14} /> {scanning ? "Scanning…" : "Scan match score"}
+          </button>
+
+          {atsResult && (
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 rounded-lg bg-surface/60 p-4">
+              <div className="mb-3 flex items-baseline gap-2">
+                <span className="font-display text-3xl text-fog">{atsResult.score}%</span>
+                <span className="text-sm text-fog-dim">match</span>
+              </div>
+              {atsResult.matched.length > 0 && (
+                <div className="mb-3">
+                  <p className="mb-1.5 text-xs uppercase tracking-wide text-teal">Matched ({atsResult.matched.length})</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {atsResult.matched.map((k) => (
+                      <span key={k} className="rounded-full bg-teal/10 px-2.5 py-1 text-xs text-teal">{k}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {atsResult.missing.length > 0 && (
+                <div>
+                  <p className="mb-1.5 text-xs uppercase tracking-wide text-coral">
+                    Missing — try adding these ({atsResult.missing.length})
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {atsResult.missing.map((k) => (
+                      <span key={k} className="rounded-full bg-coral/10 px-2.5 py-1 text-xs text-coral">{k}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
           )}
         </div>
 
