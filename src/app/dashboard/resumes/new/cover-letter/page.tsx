@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import CoverLetterWizard from "@/components/CoverLetterWizard";
-import AiComingSoon from "@/components/AiComingSoon";
-import AiUpgradeRequired from "@/components/AiUpgradeRequired";
+import NewCoverLetterTabs from "@/components/NewCoverLetterTabs";
 
 export default async function NewCoverLetterPage() {
   const aiConfigured = Boolean(process.env.ANTHROPIC_API_KEY || process.env.GROQ_API_KEY);
@@ -24,14 +22,12 @@ export default async function NewCoverLetterPage() {
         <ArrowLeft size={15} /> Back
       </Link>
       <h1 className="mb-2 font-display text-3xl text-fog">New cover letter</h1>
-      <p className="mb-8 text-fog-dim">A few details in, a ready-to-send letter out.</p>
-      {aiAvailable ? (
-        <CoverLetterWizard />
-      ) : aiConfigured ? (
-        <AiUpgradeRequired tool="cover letter writer" isTrialing={profile?.subscription_status === "trialing"} />
-      ) : (
-        <AiComingSoon tool="cover letter writer" />
-      )}
+      <p className="mb-8 text-fog-dim">Let AI write it, or paste your own and pick a template — free either way to format.</p>
+      <NewCoverLetterTabs
+        aiAvailable={aiAvailable}
+        aiConfigured={aiConfigured}
+        isTrialing={profile?.subscription_status === "trialing"}
+      />
     </main>
   );
 }

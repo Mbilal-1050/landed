@@ -47,7 +47,9 @@ export default async function NewDocumentHub() {
       <div className="grid gap-4 sm:grid-cols-3">
         {tools.map((t) => {
           const isResume = t.href === "/dashboard/resumes/new/resume";
-          const badge = !aiConfigured ? "soon" : !isPaid ? "pro" : null;
+          const isCoverLetter = t.href === "/dashboard/resumes/new/cover-letter";
+          const hasFreeMode = isResume || isCoverLetter;
+          const badge = !aiConfigured ? (hasFreeMode ? null : "soon") : !isPaid && !hasFreeMode ? "pro" : null;
           return (
             <Link
               key={t.href}
@@ -66,6 +68,7 @@ export default async function NewDocumentHub() {
               <p className="mt-1.5 text-sm text-fog-dim">
                 {t.body}
                 {isResume && !isPaid && " Manual paste + scoring is free."}
+                {isCoverLetter && !isPaid && " Paste your own + template is free."}
               </p>
             </Link>
           );
