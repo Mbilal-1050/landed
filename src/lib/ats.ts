@@ -8,6 +8,15 @@ const STOP_WORDS = new Set([
   "in","on","at","by","is","as","it","be","or","we","us","their","they",
   "job","role","team","work","working","looking","strong","ability","years",
   "experience","required","preferred","plus","etc","including","using",
+  "over","about","into","than","then","also","such","any","all","each",
+  "more","most","other","some","no","not","only","own","same","so","too",
+  "very","can","just","should","now","new","one","two","across","per",
+  "within","without","both","between","through","during","before","after",
+  "up","down","out","off","again","further","once","here","there","both",
+  "you'll","we'll","they'll","don't","won't","can't","its","it's","if",
+  "but","was","were","been","being","do","does","did","doing","would",
+  "could","might","must","may","shall","him","her","his","she","he",
+  "them","these","those","i","me","my","myself","itself","ourselves",
 ]);
 
 function extractKeywords(text: string, max = 25): string[] {
@@ -15,7 +24,10 @@ function extractKeywords(text: string, max = 25): string[] {
     .toLowerCase()
     .replace(/[^a-z0-9+.#\s]/g, " ")
     .split(/\s+/)
-    .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
+    // strip sentence-ending punctuation (periods, etc.) but keep internal
+    // characters that matter for tech terms like "c++", "c#", "node.js"
+    .map((w) => w.replace(/^[.,;:!?]+|[.,;:!?]+$/g, ""))
+    .filter((w) => w.length > 2 && !STOP_WORDS.has(w) && !/^\d+$/.test(w));
 
   const freq = new Map<string, number>();
   for (const w of words) freq.set(w, (freq.get(w) ?? 0) + 1);

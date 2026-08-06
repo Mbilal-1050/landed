@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FileEdit } from "lucide-react";
+import { FileEdit, Printer } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { COVER_LETTER_LAYOUTS, getCoverLetterLayout } from "@/lib/cover-letter-templates/registry";
 import { COLOR_THEMES, themeStyle } from "@/lib/resume-templates/themes";
@@ -125,13 +125,21 @@ export default function ManualCoverLetterForm() {
         </div>
 
         {error && <p className="text-sm text-coral">{error}</p>}
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="flex items-center gap-1.5 rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft disabled:opacity-60 cursor-pointer"
-        >
-          <FileEdit size={15} /> {saving ? "Saving…" : "Save to my documents"}
-        </button>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-1.5 rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft disabled:opacity-60 cursor-pointer"
+          >
+            <FileEdit size={15} /> {saving ? "Saving…" : "Save to my documents"}
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 rounded-lg border border-line px-5 py-2.5 text-sm text-fog transition hover:border-amber/50 cursor-pointer"
+          >
+            <Printer size={15} /> Download PDF
+          </button>
+        </div>
       </div>
 
       <div>
@@ -143,6 +151,10 @@ export default function ManualCoverLetterForm() {
             </div>
           </ResumePreviewFrame>
         </motion.div>
+      </div>
+
+      <div id="print-area" className="hidden print:block" style={themeStyle(theme)}>
+        <Layout data={previewData} />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles, Check, Copy } from "lucide-react";
+import { Sparkles, Check, Copy, Printer } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { COVER_LETTER_LAYOUTS, getCoverLetterLayout } from "@/lib/cover-letter-templates/registry";
 import { COLOR_THEMES, themeStyle } from "@/lib/resume-templates/themes";
@@ -200,13 +200,24 @@ export default function CoverLetterWizard() {
                 </div>
               </ResumePreviewFrame>
             </div>
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="mt-4 w-full rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft disabled:opacity-60 cursor-pointer"
-            >
-              {saving ? "Saving…" : "Save to my documents"}
-            </button>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="flex-1 rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-amber-soft disabled:opacity-60 cursor-pointer"
+              >
+                {saving ? "Saving…" : "Save to my documents"}
+              </button>
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-1.5 rounded-lg border border-line px-5 py-2.5 text-sm text-fog transition hover:border-amber/50 cursor-pointer"
+              >
+                <Printer size={15} /> Download PDF
+              </button>
+            </div>
+            <div id="print-area" className="hidden print:block" style={themeStyle(theme)}>
+              <Layout data={previewData} />
+            </div>
           </motion.div>
         ) : (
           <div className="rounded-xl border border-line bg-surface/40 p-6">
