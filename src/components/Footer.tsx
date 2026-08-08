@@ -101,20 +101,20 @@ export default function Footer() {
 
         {FEATURED_BADGES.length > 0 && (
           <div className="mt-10 border-t border-line pt-8">
-            <p className="mb-3 text-center text-xs uppercase tracking-widest text-fog-dim sm:text-left">
+            <p className="mb-4 text-center text-xs uppercase tracking-widest text-fog-dim sm:text-left">
               As Featured On
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 opacity-70 transition hover:opacity-100 sm:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-start">
               {FEATURED_BADGES.map((b) => (
                 <a
                   key={b.href}
                   href={b.href}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className="grayscale transition hover:grayscale-0"
+                  className="group relative rounded-xl border border-amber/30 bg-surface/60 p-3 shadow-[0_0_20px_-8px_rgba(232,163,61,0.35)] transition duration-200 hover:scale-105 hover:border-amber/60 hover:shadow-[0_0_30px_-6px_rgba(232,163,61,0.55)]"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element -- external badge asset from third-party directory */}
-                  <img src={b.imgSrc} alt={b.alt} width={b.width} height={b.height} />
+                  <img src={b.imgSrc} alt={b.alt} width={b.width} height={b.height} className="block" />
                 </a>
               ))}
             </div>
