@@ -11,6 +11,17 @@ const SOCIALS: { icon: (props: { size?: number }) => React.JSX.Element; href: st
   { icon: InstagramIcon, href: "https://www.instagram.com/landedofficial.online?igsh=YzFwazF5M2l6Z21p", label: "Instagram" },
 ];
 
+// Directory/press badges — add more entries here as new features/listings come in.
+const FEATURED_BADGES: { href: string; imgSrc: string; alt: string; width: number; height: number }[] = [
+  {
+    href: "https://aitooldiscovery.com",
+    imgSrc: "https://aitooldiscovery.com/badges/featured-1.svg",
+    alt: "Featured on AI Tool Discovery",
+    width: 200,
+    height: 54,
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="border-t border-line px-6 py-16 sm:px-10">
@@ -88,7 +99,29 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 sm:flex-row">
+        {FEATURED_BADGES.length > 0 && (
+          <div className="mt-10 border-t border-line pt-8">
+            <p className="mb-3 text-center text-xs uppercase tracking-widest text-fog-dim sm:text-left">
+              As Featured On
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 opacity-70 transition hover:opacity-100 sm:justify-start">
+              {FEATURED_BADGES.map((b) => (
+                <a
+                  key={b.href}
+                  href={b.href}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className="grayscale transition hover:grayscale-0"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- external badge asset from third-party directory */}
+                  <img src={b.imgSrc} alt={b.alt} width={b.width} height={b.height} />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 sm:flex-row">
           <p className="text-xs text-fog-dim">© {new Date().getFullYear()} Landed. All rights reserved.</p>
           <p className="text-xs text-fog-dim">Payments securely processed by Whop.</p>
         </div>
