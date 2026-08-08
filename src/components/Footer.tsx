@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { LogoFull } from "./Logo";
+import { XIcon, LinkedInIcon, YouTubeIcon, InstagramIcon } from "./BrandIcons";
 import NewsletterForm from "./NewsletterForm";
 import { CATEGORIES } from "@/lib/resume-templates/registry";
 
-// TODO: fill in once real, confirmed social accounts exist — e.g.
-// import { XIcon, LinkedInIcon, InstagramIcon } from "./BrandIcons";
-// { icon: XIcon, href: "https://x.com/yourhandle", label: "X (Twitter)" }
-const SOCIALS: { icon: (props: { size?: number }) => React.JSX.Element; href: string; label: string }[] = [];
+const SOCIALS: { icon: (props: { size?: number }) => React.JSX.Element; href: string; label: string }[] = [
+  { icon: XIcon, href: "https://x.com/officiallanded", label: "X (Twitter)" },
+  { icon: LinkedInIcon, href: "https://www.linkedin.com/in/muhammad-bilal-623982426", label: "LinkedIn" },
+  { icon: YouTubeIcon, href: "https://youtube.com/@landedofficial.online", label: "YouTube" },
+  { icon: InstagramIcon, href: "https://www.instagram.com/landedofficial.online?igsh=YzFwazF5M2l6Z21p", label: "Instagram" },
+];
 
 export default function Footer() {
   return (
